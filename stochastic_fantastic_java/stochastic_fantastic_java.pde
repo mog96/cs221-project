@@ -101,7 +101,7 @@ void draw() {
       drawCurve(curve);
     }
     // endRecord();
-    saveFrame("movie/wavy-line-######.tif");
+    // saveFrame("movie/wavy-line-######.tif");
     
     // Bounding box of random endpoint is larger if cursor is moving faster.
     // This makes curves larger when cursor speed is faster.
@@ -115,7 +115,7 @@ void draw() {
   
     linesDrawn++;
   } else {
-    saveFrame("movie/wavy-line-######.tif");
+    // saveFrame("movie/wavy-line-######.tif");
     exit();
   }
 }
