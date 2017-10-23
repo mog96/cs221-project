@@ -1,0 +1,19 @@
+TASK DEFINITION
+  - Draw a looping wavy line. Achieve balance between order and chaos that yields beauty as observed by a human
+
+INFRASTRUCTURE
+  - Processing in Python
+
+APPROACH
+  - Model as search problem
+    - States are points in a grid (graph)
+    - Decision of where next line segment should be drawn is based on some heuristic
+
+  - Baseline: Create a line that touches all dots
+  - Oracle: Create a line that touches all dots and forms a loop
+
+LITERATURE REVIEW
+  - Procedural graph generation (for creating wavy lines)
+
+ERROR ANALYSIS
+  - [ Design a few experiments to show the properties (both pros and cons) of your system. For example, if your system is supposed to deal with graphs with lots of cycles, then construct both examples with lots of cycles and ones without to test your hypothesis. ]
