@@ -1,5 +1,13 @@
+###############################################################################
+#
+#               W A V Y             L I N E               A I
+#
+###############################################################################
+
 grid = []
-borderWidth = 5
+# Border will be at least this wide. May be slightly larger in order to center
+# grid in frame given pointSpacing.
+minBorderWidth = 5
 pointSpacing = 5
 
 def setup():
@@ -23,6 +31,7 @@ def drawGrid():
 def makeGrid():
     newGrid = []
     yIndex = 0
+    
     for y in range(borderWidth, height - borderWidth, pointSpacing):
         newGrid.append([])
         for x in range(borderWidth, width - borderWidth, pointSpacing):
