@@ -4,6 +4,58 @@
 #
 ###############################################################################
 
+
+
+class WavyLineProblem(util.SearchProblem):
+    def __init__(self, query, unigramCost):
+        self.query = query
+        self.unigramCost = unigramCost
+
+    def startState(self):
+        # BEGIN_YOUR_CODE (our solution is 1 line of code, but don't worry if you deviate from this)
+        return (0, 0)
+        # END_YOUR_CODE
+        
+        
+        
+        
+        
+        # TODO: START HERE
+        # Define search problem.
+        
+        
+        
+        
+
+    def isEnd(self, state):
+        # BEGIN_YOUR_CODE (our solution is 2 lines of code, but don't worry if you deviate from this)
+        return state[1] == len(self.query)
+        # END_YOUR_CODE
+
+    def succAndCost(self, state): 
+        # BEGIN_YOUR_CODE (our solution is 7 lines of code, but don't worry if you deviate from this)
+        newStates = []
+        if state[1] + 1 <= len(self.query):
+            for endIndex in range(state[1] + 1, len(self.query) + 1): # range() end index is exclusive
+                action = self.query[state[1] : endIndex]
+                newStates.append((action, (state[1], endIndex), self.unigramCost(action)))
+        return newStates
+
+
+###############################################################################
+# Graphical Display
+
+class Point(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        return "(" + str(self.x) + ", " + str(self.y) + ")"
+    
+    def __repr__(self):
+        return self.__str__()
+
 # Border will be at least this wide. May be slightly larger in order to center
 # grid in frame given pointSpacing.
 minBorderWidth = 10
@@ -23,6 +75,8 @@ def setup():
     drawGrid()
     drawLine()
     # frameRate(30)
+    
+    # TODO: Instantiate wavy line problem
 
 def draw():
     # TODO: Draw line in red.
@@ -58,17 +112,3 @@ def drawLine():
     stroke(255, 0, 0)
     curve(firstPoint.x, firstPoint.y, firstPoint.x, firstPoint.y, \
           secondPoint.x, secondPoint.y, secondPoint.x, secondPoint.y)
-
-###############################################################################
-# Class definitions
-
-class Point(object):
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-    
-    def __str__(self):
-        return "(" + str(self.x) + ", " + str(self.y) + ")"
-    
-    def __repr__(self):
-        return self.__str__()

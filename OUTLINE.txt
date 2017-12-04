@@ -3,7 +3,7 @@
 +------------------+
 
 TASK DEFINITION
-  - Draw a looping wavy line. Achieve balance between order and chaos that yields beauty as observed by a human
+  - Draw a looping (complete circle) wavy line. Achieve balance between order and chaos that yields beauty as observed by a human
 
 INFRASTRUCTURE
   - Processing in Python
@@ -22,11 +22,13 @@ LITERATURE REVIEW
 ERROR ANALYSIS
   - [ Design a few experiments to show the properties (both pros and cons) of your system. For example, if your system is supposed to deal with graphs with lots of cycles, then construct both examples with lots of cycles and ones without to test your hypothesis. ]
 
+
 ---------
+
 
 PERCY'S FEEDBACK 10/23:
   - This is a search problem
-  - Constraints should be between filliing the whole rectangle with the line and making an interesting pattern (which he supposes is at odds with trying to fill the whole rectangle)
+  - Constraints should be between filling the whole rectangle with the line and making an interesting pattern (which he supposes is at odds with trying to fill the whole rectangle)
   - Oracle is one of my drawings
   - Baseline is basic whole rectangle/basic interesting line that does not fill rectangle
 
@@ -40,3 +42,10 @@ PARAMETERS TO TUNE
     - Each is filled before moving on to an adjacent polygon
     - Polygons could be composed ahead of time or composed as line is drawn, with constraints on their size
       - Requirement perhaps is that at least two/three corners must touch corners of nearby polygons
+
+
++--------------+
+| RELATED WORK |
++--------------+
+
+Homework 3: Text Reconstruction (search algorithms)
