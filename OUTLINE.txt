@@ -1,7 +1,6 @@
 +------------------+
 | PROPOSAL OUTLINE |
 +------------------+
-
 TASK DEFINITION
   - Draw a looping (complete circle) wavy line. Achieve balance between order and chaos that yields beauty as observed by a human
 
@@ -26,17 +25,9 @@ ERROR ANALYSIS
 ---------
 
 
-PERCY'S FEEDBACK 10/23:
-  - This is a search problem
-  - Constraints should be between filling the whole rectangle with the line and making an interesting pattern (which he supposes is at odds with trying to fill the whole rectangle)
-  - Oracle is one of my drawings
-  - Baseline is basic whole rectangle/basic interesting line that does not fill rectangle
-
-
 +-----------------------+
 | IDEAS FOR COMPOSITION |
 +-----------------------+
-
 PARAMETERS TO TUNE
   - Compose drawing into polygonal cells
     - Each is filled before moving on to an adjacent polygon
@@ -47,5 +38,28 @@ PARAMETERS TO TUNE
 +--------------+
 | RELATED WORK |
 +--------------+
-
 Homework 3: Text Reconstruction (search algorithms)
+
+
+
++-------+
+| NOTES |
++-------+
+PERCY'S FEEDBACK 10/23:
+  - This is a search problem
+  - Constraints should be between filling the whole rectangle with the line and making an interesting pattern (which he supposes is at odds with trying to fill the whole rectangle)
+  - Oracle is one of my drawings
+  - Baseline is basic whole rectangle/basic interesting line that does not fill rectangle
+
+WORK SESSION 12/4
+  - The way I draw the line by hand is sort of like DFS -- I go deep and then back up and fill up all the newly delineated whitespace
+  - But the coded implementation must use something more like UCS, because that will capture the semantics of the decisions made along the way as the line is drawn
+  - The difference between what I'd like to do and how UCS works, however, is that the costs are slightly random (stochastic fantastic)
+    - No two wavy line drawings are the same
+    - So therefore, the costs of each step cannot be the same from run to run
+  - This randomness will obviously have to be seeded for testing purposes
+  - And it will need to be bounded
+  - RANDOM COST IDEAS:
+    - Bias toward a straight line
+      - i.e., choose a next hop that will keep the line straight
+      - I believe this might encourage the model to try to fill the whole page
