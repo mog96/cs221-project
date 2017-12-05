@@ -1,26 +1,29 @@
 ###############################################################################
-#
+
 #               W A V Y             L I N E               A I
-#
+
 ###############################################################################
 
 
 
 class WavyLineProblem(util.SearchProblem):
-    def __init__(self, startLocation):
-        self.startLocation = startLocation # Tuple representing starting (x, y)
+    def __init__(self, startPoint):
+        self.startPoint = startPoint  # Tuple representing initial (x, y)
         self.maxLineLength = 60
 
     def startState(self):
         # State is current location and distance traveled
-        return (self.startLocation, 0)        
+        return (self.startPoint, 0)        
 
     def isEnd(self, state):
         return state[1] == self.maxLineLength
 
-    def succAndCost(self, state): 
+    def succAndCost(self, state):
+        currentPoint, distance = state
         newStates = []
-        if state[1] + 1 <= self.maxLineLength:
+        if distance + 1 <= self.maxLineLength:
+            for point in self.surroundingPoints(currentPoint):
+                #
 
             # TODO: Replace vv
 
@@ -29,6 +32,15 @@ class WavyLineProblem(util.SearchProblem):
                 newStates.append((action, (state[1], endIndex), self.unigramCost(action)))
 
         return newStates
+
+    def surroundingPoints(self, point):
+        #
+
+class Grid():
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.array = [[(x, y) for x in range(width)] for y in range(height)]
 
 
 ###############################################################################
