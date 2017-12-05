@@ -60,6 +60,19 @@ WORK SESSION 12/4
   - This randomness will obviously have to be seeded for testing purposes
   - And it will need to be bounded
   - RANDOM COST IDEAS:
-    - Bias toward a straight line
-      - i.e., choose a next hop that will keep the line straight
-      - I believe this might encourage the model to try to fill the whole page
+    - LIVE:
+      - Bias toward a straight line
+        - i.e., choose a next hop that will keep the line straight
+        - I believe this might encourage the model to try to fill the whole page
+    - STATIC:
+      - Assign random values ahead of time
+      - Store in dictionary mapping each loc to each next loc
+    - Hang on, I think assignments _have_ to be static for UCS
+      - Or at least, this might make for the simplest implementation
+  - Current concern is that we want to visualize the line being drawn in real time
+    - (The dream is the process)
+    - How about DFS-ID? Iterate to a certain level, and then reset..?
+    - DFS-ID to a certain level, to determine a hop. Then DFS to a certain level from the nuw current loc, to determine the next hop. And repeat
+      - Instead of randomness costs as in UCS, we have randomness of depth of DFS-ID
+        - Could find a way to dial this to make larger curves at the outset, and then fill with smaller curves
+
