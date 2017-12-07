@@ -5,20 +5,22 @@
 ###############################################################################
 
 
-
 class WavyLineProblem(util.SearchProblem):
     def __init__(self, startPoint):
         self.startPoint = startPoint  # Tuple representing initial (x, y)
         self.maxLineLength = 60
 
+    # State is 2-D array of points visited. Or a set and a list ?
     def startState(self):
-        # State is current location and distance traveled
-        return (self.startPoint, 0)        
+        # TODO: fix VV
+        return (self.startPoint, 0)
 
     def isEnd(self, state):
+        # TODO: fix VV
         return state[1] == self.maxLineLength
 
     def succAndCost(self, state):
+        # TODO: fix VV
         currentPoint, distance = state
         newStates = []
         if distance + 1 <= self.maxLineLength:
@@ -33,14 +35,10 @@ class WavyLineProblem(util.SearchProblem):
 
         return newStates
 
+    # Returns the set of valid points surrounding point.
     def surroundingPoints(self, point):
         #
 
-class Grid():
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.array = [[(x, y) for x in range(width)] for y in range(height)]
 
 
 ###############################################################################

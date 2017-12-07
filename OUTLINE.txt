@@ -76,3 +76,15 @@ WORK SESSION 12/4
       - Instead of randomness costs as in UCS, we have randomness of depth of DFS-ID
         - Could find a way to dial this to make larger curves at the outset, and then fill with smaller curves
 
+WORK SESSION 12/6
+  - Last work session I spoke with CA Steven Mussman about how he thought I could go about the problem
+  - Steve seemed to think that the best way to generate the line is to have it wrap pack and forth around itself
+    - So, start in, say, the middle of the page and go right or left, then turn around and go back along the way it just came, then turn around again
+  - Steve's insight is key because it identies a core part of how I draw the line
+    - Namely, having it wrap back on itself
+  - Steve suggested the search could be constrained by the current shape made by the line
+    - So, for example, since the way he described the line being generated will likely result in a circle, but we want a square in order to fit the page, lower cost wold be assigned to an action that results in more of a square
+  - Steve said that the state would be an entire 2-D array of points representing the current path
+    - I'm thinking a non-None point in the grid represents a point visited, and each point contains the coordinates of the next point in the graph
+  - My concern still, however, is how to make this a search problem while still drawing the line in real time
+    - I'm not sure this can be accomplished using the basic paradigm for implementing search prescribed in class
