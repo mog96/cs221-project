@@ -88,3 +88,5 @@ WORK SESSION 12/6
     - I'm thinking a non-None point in the grid represents a point visited, and each point contains the coordinates of the next point in the graph
   - My concern still, however, is how to make this a search problem while still drawing the line in real time
     - I'm not sure this can be accomplished using the basic paradigm for implementing search prescribed in class
+    - A hacky way to go about this would be to have a timer running that somehow grabs the current state
+      - Not sure that's possible, though
