@@ -96,6 +96,10 @@ WORK SESSION 12/9
     - So, it'll be jumpy, but it'll show the general progression of the search
   - Only thing left to figure out for this V1 implementation is _cost_
     - For now, we will just use a random number in the range [0, 1)
+  - raise Exception("Not implemented yet")
+  - Removed 'Grid is full' check from IsEnd(s). Checking surrounding points should be sufficient
+    - I deally we will fill the whole grid, but this is a problem that will be solved by assigning appropriate cost to an action
+    - And as Percy said, the hard part of this problem will be filling the whole page
 
   Wavy Line Search Problem V1
   ---------------------------
@@ -108,5 +112,5 @@ WORK SESSION 12/9
 
   Succ(s, a):               Grid updated with state s current point pointing to state s' current point
 
-  IsEnd(s):                 Grid is full, or all points surrounding current point are non-'None'
-                            Development version will include a line length parameter in state, and this length will be checked agains some maximum
+  IsEnd(s):                 All points surrounding current point have been visited
+                            Development version will include a line length parameter in state, and this length will be checked against some maximum

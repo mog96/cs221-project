@@ -9,21 +9,25 @@ class WavyLineProblem(util.SearchProblem):
     def __init__(self, width, height, startPoint):
         self.width = width
         self.height = height
-        self.startPoint = startPoint  # Tuple representing initial (x, y)'
-        self.lineLength = 0
+        self.startPoint = startPoint  # (x, y) tuple
         self.maxLineLength = 60
 
-    # Staerting point and 2-D array of grid locations. Each point in the grid
-    # will contian the coordinates of the next point in the line.
+    # Return the start state: Starting point and 2-D array of grid locations.
+    # Each point in the grid will store the coordinates of the next point in
+    # the line being drawn.
+    # Development version contains line length state parameter as well.
     def startState(self):
-        return (self.startPoint, [[None] * self.width] * self.height, lineLength)
+        startingGrid = self.startPoint, [[None] * self.width] * self.height
+        startingLineLength = 0
+        return (startingGrid, self.startPoint, startingLineLength)
 
+    # Return whether |state| is an end state or not: True if all points
+    # surrounding current point have been visited.
     def isEnd(self, state):
         _, _, lineLength = state
-        return lineLength == self.maxLineLength
+        return lineLength == self.maxLineLength or self.surroundingPoints(state) is None
 
     def succAndCost(self, state):
-        # TODO: fix VV
         currentPoint, distance = state
         newStates = []
         if distance + 1 <= self.maxLineLength:
@@ -39,8 +43,8 @@ class WavyLineProblem(util.SearchProblem):
         return newStates
 
     # Returns the set of valid points surrounding point.
-    def surroundingPoints(self, point):
-        #
+    def surroundingPoints(self, state):
+        raise Exception("Not implemented yet")
 
 
 
