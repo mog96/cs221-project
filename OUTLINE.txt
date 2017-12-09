@@ -81,11 +81,11 @@ WORK SESSION 12/6
   - Steve seemed to think that the best way to generate the line is to have it wrap pack and forth around itself
     - So, start in, say, the middle of the page and go right or left, then turn around and go back along the way it just came, then turn around again
   - Steve's insight is key because it identies a core part of how I draw the line
-    - Namely, having it wrap back on itself
+    - I make it wrap back on itself
   - Steve suggested the search could be constrained by the current shape made by the line
     - So, for example, since the way he described the line being generated will likely result in a circle, but we want a square in order to fit the page, lower cost wold be assigned to an action that results in more of a square
   - Steve said that the state would be an entire 2-D array of points representing the current path
-    - I'm thinking a non-None point in the grid represents a point visited, and each point contains the coordinates of the next point in the graph
+    - I'm thinking a non-None point in the grid represents a point visited, and each point contains the coordinates of the next point in the line
   - My concern still, however, is how to make this a search problem while still drawing the line in real time
     - I'm not sure this can be accomplished using the basic paradigm for implementing search prescribed in class
     - A hacky way to go about this would be to have a timer running that somehow grabs the current state
@@ -98,18 +98,28 @@ WORK SESSION 12/9
     - For now, we will just use a random number in the range [0, 1)
   - raise Exception("Not implemented yet")
   - Removed 'Grid is full' check from IsEnd(s). Checking surrounding points should be sufficient
-    - I deally we will fill the whole grid, but this is a problem that will be solved by assigning appropriate cost to an action
-    - And as Percy said, the hard part of this problem will be filling the whole page
+    - I deally we will fill the whole grid, but this is a problem that will be solved by assigning better costs to actions
+    - And as Percy said, the hardest part of this problem will be filling the whole page
 
   Wavy Line Search Problem V1
   ---------------------------
-  Starting state s_start:   Width x height grid of 'None'
+  Starting state s_start:   Width x height grid of 'None'; starting point; current direction of motion (clockwise/counterclockwise, initialized randomly)
 
-  Actions(s):               Clockwise or counter clockwise along adjacent line
+  Actions(s):               Move clockwise or counterclockwise along adjacent line
 
   Cost(s, a):               Random number in the range [0.0, 1.0)
 
-  Succ(s, a):               Grid updated with state s current point pointing to state s' current point
+  Succ(s, a):               Grid updated with current point in state s pointing to current point in state s'
 
   IsEnd(s):                 All points surrounding current point have been visited
                             Development version will include a line length parameter in state, and this length will be checked against some maximum
+
+  - Now to deal with deciding whether to go clockwise or counterclockwise. My thoughts are as follows:
+    - At the outset, we flip a coin to decide whether to go clockwise or counterclockwise
+      - To simplify this explanation, let's say we start out clockwise
+    - Any step made that can be counted as clockwise is considered clockwise
+      - So, when we take our first step, it is clockwise, even though there is not yet anything to be going clockwise around
+      - When we run into a visited point, any step taken to get around it and continue moving clockwise is considered clockwise
+    - To make the line interesting, there is some probability that we will begin moving counterclockwise
+      - This means taking a step in a direction that does not make sense if we were simply moving in our original clockwise direction
+      - Just updated state to include the current direction of motion (clockwise/counterclockwise)

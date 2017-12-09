@@ -7,6 +7,9 @@
 import random
 
 class WavyLineProblem(util.SearchProblem):
+    CLOCKWISE = 0
+    COUNTERCLOCKWISE = 1
+
     def __init__(self, width, height, startPoint):
         assert(width > 0 and height > 0)
         x, y = startPoint
@@ -16,16 +19,20 @@ class WavyLineProblem(util.SearchProblem):
         self.height = height
         self.startPoint = startPoint  # (x, y) tuple
         self.maxLineLength = 60
+        random.seed(42)                        # TODO: Remove from prod
 
-    # Returns the start state: Starting point as an (x, y) tuple and a 2-D
-    # array of grid locations organized as a list of rows. Each visited point
-    # in the grid stores the coordinates of the next point in the line being
-    # drawn. Unvisited points are therefore set to 'None'.
+    # Returns the start state:
+    #   - Starting point as an (x, y) tuple
+    #   - 2-D array of grid locations organized as a list of rows
+    #   - Current direction of motion: clockwise or counterclockwise
+    # Each visited point in the grid stores the coordinates of the next point
+    # in the line being drawn. Unvisited points are therefore set to 'None'.
     # Development version contains line length state parameter as well.
     def startState(self):
         startingGrid = self.startPoint, [[None] * self.width] * self.height
         startingLineLength = 0
-        return (startingGrid, self.startPoint, startingLineLength)
+        return (startingGrid, self.startPoint, startingLineLength, \
+            random.choice([CLOCKWISE, COUNTERCLOCKWISE]))
 
     # Returns whether |state| is an end state or not: True if all points
     # surrounding current point have been visited.
@@ -36,17 +43,28 @@ class WavyLineProblem(util.SearchProblem):
             self.surroundingPoints(state) is None
 
     # Returns a list of (action, newState, cost) tuples corresponding to edges
-    # coming out of |state|. |newState| contains a new current point and a new
-    # grid, updated from the previous grid such that |state|'s current point is
-    # populated with |newState|'s current point. Cost is a random number in the
-    # range [0.0, 1.0).
+    # coming out of |state|. Actions are:
+    #   - Move in the current direction of motion (clockwise/counterclockwise)
+    #   - Move in the other direction
+    # as the current grid permits. Any step taken that can be considered as
+    # continuing in the current direction is considered as such. So, for
+    # example, a step taken to get around a visited point, if necessary to
+    # continue in the current direciton, is considered the same as the current
+    # direction. Conversely, a step taken that is not necessary to continue in
+    # the current direction is considered to be the other direction of motion.
+    # New state is comprised of:
+    #   - New current point selected from unvisited points surrounding
+    #     |state|'s current point
+    #   - New grid, updated from the previous grid such that |state|'s current
+    #     point is populated with |newState|'s current point
+    #   - New direction of motion, if changed; else same as before.
+    # Cost is a random number in the range [0.0, 1.0).
     # Development version stores incremented line length in |newState| as well.
     def succAndCost(self, state):
         newStates = []
         _, _, lineLength = state
         if lineLength + 1 <= self.maxLineLength:
             for point in self.surroundingPoints(currentPoint):
-                random.seed(42)                                # TODO: Remove
 
 
                 # TODO: START HERE
@@ -60,7 +78,7 @@ class WavyLineProblem(util.SearchProblem):
 
         return newStates
 
-    # Returns a list of the unoccupied points in |state|'s grid surrounding
+    # Returns a list of the unvisited points in |state|'s grid surrounding
     # |state|'s current point.
     def surroundingPoints(self, state):
         points = []
