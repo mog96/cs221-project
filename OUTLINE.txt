@@ -95,6 +95,7 @@ WORK SESSION 12/9
   - I'm thinking I can update the display to reflect whatever current state is being examined in succAndCost()
     - So, it'll be jumpy, but it'll show the general progression of the search
   - Only thing left to figure out for this V1 implementation is _cost_
+    - For now, we will just use a random number in the range [0, 1)
 
   Wavy Line Search Problem V1
   ---------------------------
@@ -103,7 +104,7 @@ WORK SESSION 12/9
 
   Actions(s):               Clockwise or counter clockwise along adjacent line
 
-  Cost(s, a):               TODO
+  Cost(s, a):               Random number between 0 and 1
 
   Succ(s, a):               Grid updated with state s current point pointing to state s' current point
 
