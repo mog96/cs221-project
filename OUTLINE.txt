@@ -94,3 +94,18 @@ WORK SESSION 12/6
 WORK SESSION 12/9
   - I'm thinking I can update the display to reflect whatever current state is being examined in succAndCost()
     - So, it'll be jumpy, but it'll show the general progression of the search
+  - Only thing left to figure out for this V1 implementation is _cost_
+
+  Wavy Line Search Problem V1
+  ---------------------------
+
+  Starting state s_start:   Width x height grid of 'None'
+
+  Actions(s):               Clockwise or counter clockwise along adjacent line
+
+  Cost(s, a):               TODO
+
+  Succ(s, a):               Grid updated with state s current point pointing to state s' current point
+
+  IsEnd(s):                 Grid is full, or all points surrounding current point are non-'None'
+                            Development version will include a line length parameter in state, and this length will be checked agains some maximum
