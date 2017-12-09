@@ -8,6 +8,10 @@ import random
 
 class WavyLineProblem(util.SearchProblem):
     def __init__(self, width, height, startPoint):
+        assert(width > 0 && height > 0)
+        x, y = startPoint
+        assert(x >= 0 && x < width)
+        assert(y >= 0 && y < height)
         self.width = width
         self.height = height
         self.startPoint = startPoint  # (x, y) tuple
@@ -56,7 +60,15 @@ class WavyLineProblem(util.SearchProblem):
 
     # Returns the set of valid points surrounding point.
     def surroundingPoints(self, state):
-        raise Exception("Not implemented yet")
+        points = []
+        grid, currentPoint, _ = state
+        currentX, currentY = currentPoint
+        xMin, xMax = max(0, currentX - 1), min(self.width - 1, currentX + 1)
+        yMin, yMax = max(0, currentY - 1), min(self.width - 1, currentY + 1)
+        for x in range(xMin, xMax):       # range() end index is exclusive
+            for y in range(yMin, yMax):
+                #
+        return points
 
 
 
