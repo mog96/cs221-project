@@ -8,18 +8,19 @@ import random
 
 class WavyLineProblem(util.SearchProblem):
     def __init__(self, width, height, startPoint):
-        assert(width > 0 && height > 0)
+        assert(width > 0 and height > 0)
         x, y = startPoint
-        assert(x >= 0 && x < width)
-        assert(y >= 0 && y < height)
+        assert(x >= 0 and x < width)
+        assert(y >= 0 and y < height)
         self.width = width
         self.height = height
         self.startPoint = startPoint  # (x, y) tuple
         self.maxLineLength = 60
 
-    # Returns the start state: Starting point and 2-D array of grid locations.
-    # Each point in the grid will store the coordinates of the next point in
-    # the line being drawn.
+    # Returns the start state: Starting point as an (x, y) tuple and a 2-D
+    # array of grid locations organized as a list of rows. Each visited point
+    # in the grid stores the coordinates of the next point in the line being
+    # drawn. Unvisited points are therefore set to 'None'.
     # Development version contains line length state parameter as well.
     def startState(self):
         startingGrid = self.startPoint, [[None] * self.width] * self.height
@@ -35,9 +36,10 @@ class WavyLineProblem(util.SearchProblem):
             self.surroundingPoints(state) is None
 
     # Returns a list of (action, newState, cost) tuples corresponding to edges
-    # coming out of |state|. |newState| contains a new current point and a grid
-    # updated such that |state|'s current point is populated with |newState|'s
-    # current point. Cost is a random number in the range [0.0, 1.0).
+    # coming out of |state|. |newState| contains a new current point and a new
+    # grid, updated from the previous grid such that |state|'s current point is
+    # populated with |newState|'s current point. Cost is a random number in the
+    # range [0.0, 1.0).
     # Development version stores incremented line length in |newState| as well.
     def succAndCost(self, state):
         newStates = []
@@ -58,16 +60,18 @@ class WavyLineProblem(util.SearchProblem):
 
         return newStates
 
-    # Returns the set of valid points surrounding point.
+    # Returns a list of the unoccupied points in |state|'s grid surrounding
+    # |state|'s current point.
     def surroundingPoints(self, state):
         points = []
         grid, currentPoint, _ = state
         currentX, currentY = currentPoint
         xMin, xMax = max(0, currentX - 1), min(self.width - 1, currentX + 1)
-        yMin, yMax = max(0, currentY - 1), min(self.width - 1, currentY + 1)
-        for x in range(xMin, xMax):       # range() end index is exclusive
-            for y in range(yMin, yMax):
-                #
+        yMin, yMax = max(0, currentY - 1), min(self.height - 1, currentY + 1)
+        for x in range(xMin, xMax + 1):       # range() end index is exclusive
+            for y in range(yMin, yMax + 1):
+                if grid[y][x] is not None and (x, y) != currentPoint:
+                    points.append((x, y))
         return points
 
 
