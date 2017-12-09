@@ -6,18 +6,21 @@
 
 
 class WavyLineProblem(util.SearchProblem):
-    def __init__(self, startPoint):
-        self.startPoint = startPoint  # Tuple representing initial (x, y)
+    def __init__(self, width, height, startPoint):
+        self.width = width
+        self.height = height
+        self.startPoint = startPoint  # Tuple representing initial (x, y)'
+        self.lineLength = 0
         self.maxLineLength = 60
 
-    # State is 2-D array of points visited. Or a set and a list ?
+    # Staerting point and 2-D array of grid locations. Each point in the grid
+    # will contian the coordinates of the next point in the line.
     def startState(self):
-        # TODO: fix VV
-        return (self.startPoint, 0)
+        return (self.startPoint, [[None] * self.width] * self.height, lineLength)
 
     def isEnd(self, state):
-        # TODO: fix VV
-        return state[1] == self.maxLineLength
+        _, _, lineLength = state
+        return lineLength == self.maxLineLength
 
     def succAndCost(self, state):
         # TODO: fix VV

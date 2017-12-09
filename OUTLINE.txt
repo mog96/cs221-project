@@ -90,3 +90,7 @@ WORK SESSION 12/6
     - I'm not sure this can be accomplished using the basic paradigm for implementing search prescribed in class
     - A hacky way to go about this would be to have a timer running that somehow grabs the current state
       - Not sure that's possible, though
+
+WORK SESSION 12/9
+  - I'm thinking I can update the display to reflect whatever current state is being examined in succAndCost()
+    - So, it'll be jumpy, but it'll show the general progression of the search
