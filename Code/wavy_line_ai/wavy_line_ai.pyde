@@ -12,12 +12,13 @@ class WavyLineProblem(util.SearchProblem):
 
     def __init__(self, width, height, startPoint):
         assert(width > 0 and height > 0)
+        self.width = width
+        self.height = height
         x, y = startPoint
         assert(x >= 0 and x < width)
         assert(y >= 0 and y < height)
-        self.width = width
-        self.height = height
         self.startPoint = startPoint  # (x, y) tuple
+        self.changeDirectionProb = .314
         self.maxLineLength = 60
         random.seed(42)                        # TODO: Remove from prod
 
@@ -26,13 +27,15 @@ class WavyLineProblem(util.SearchProblem):
     #   - 2-D array of grid locations organized as a list of rows
     #   - Current direction of motion: clockwise or counterclockwise
     # Each visited point in the grid stores the coordinates of the next point
-    # in the line being drawn. Unvisited points are therefore set to 'None'.
+    # in the line being drawn. Unvisited points in the grid are therefore set
+    # to 'None'.
     # Development version contains line length state parameter as well.
     def startState(self):
         startingGrid = self.startPoint, [[None] * self.width] * self.height
+        startingDirection = random.choice([CLOCKWISE, COUNTERCLOCKWISE])
         startingLineLength = 0
-        return (startingGrid, self.startPoint, startingLineLength, \
-            random.choice([CLOCKWISE, COUNTERCLOCKWISE]))
+        return (startingGrid, self.startPoint, self.startingDirection, \
+            startingLineLength)
 
     # Returns whether |state| is an end state or not: True if all points
     # surrounding current point have been visited.
@@ -62,10 +65,10 @@ class WavyLineProblem(util.SearchProblem):
     # Development version stores incremented line length in |newState| as well.
     def succAndCost(self, state):
         newStates = []
-        _, _, lineLength = state
+        _, _, currentDirection, lineLength = state
         if lineLength + 1 <= self.maxLineLength:
-            for point in self.surroundingPoints(currentPoint):
-
+            for point in self.unvisitedSurroundingPoints(state):
+                if self.changeDirection()
 
                 # TODO: START HERE
                 #       Need to figure out how to negotiate surrounding points
@@ -80,9 +83,9 @@ class WavyLineProblem(util.SearchProblem):
 
     # Returns a list of the unvisited points in |state|'s grid surrounding
     # |state|'s current point.
-    def surroundingPoints(self, state):
+    def unvisitedSurroundingPoints(self, state):
         points = []
-        grid, currentPoint, _ = state
+        grid, currentPoint, _, _ = state
         currentX, currentY = currentPoint
         xMin, xMax = max(0, currentX - 1), min(self.width - 1, currentX + 1)
         yMin, yMax = max(0, currentY - 1), min(self.height - 1, currentY + 1)
@@ -91,6 +94,9 @@ class WavyLineProblem(util.SearchProblem):
                 if grid[y][x] is not None and (x, y) != currentPoint:
                     points.append((x, y))
         return points
+
+    def changeDirection(self):
+        return random.random() > self.changeDirectionProb
 
 
 
