@@ -4,6 +4,7 @@
 
 ###############################################################################
 
+import random
 
 class WavyLineProblem(util.SearchProblem):
     def __init__(self, width, height, startPoint):
@@ -12,7 +13,7 @@ class WavyLineProblem(util.SearchProblem):
         self.startPoint = startPoint  # (x, y) tuple
         self.maxLineLength = 60
 
-    # Return the start state: Starting point and 2-D array of grid locations.
+    # Returns the start state: Starting point and 2-D array of grid locations.
     # Each point in the grid will store the coordinates of the next point in
     # the line being drawn.
     # Development version contains line length state parameter as well.
@@ -21,24 +22,35 @@ class WavyLineProblem(util.SearchProblem):
         startingLineLength = 0
         return (startingGrid, self.startPoint, startingLineLength)
 
-    # Return whether |state| is an end state or not: True if all points
+    # Returns whether |state| is an end state or not: True if all points
     # surrounding current point have been visited.
+    # Development version checks whether line length has exceeded max.
     def isEnd(self, state):
         _, _, lineLength = state
-        return lineLength == self.maxLineLength or self.surroundingPoints(state) is None
+        return lineLength == self.maxLineLength or \
+            self.surroundingPoints(state) is None
 
+    # Returns a list of (action, newState, cost) tuples corresponding to edges
+    # coming out of |state|. |newState| contains a new current point and a grid
+    # updated such that |state|'s current point is populated with |newState|'s
+    # current point. Cost is a random number in the range [0.0, 1.0).
+    # Development version stores incremented line length in |newState| as well.
     def succAndCost(self, state):
-        currentPoint, distance = state
         newStates = []
-        if distance + 1 <= self.maxLineLength:
+        _, _, lineLength = state
+        if lineLength + 1 <= self.maxLineLength:
             for point in self.surroundingPoints(currentPoint):
-                #
+                random.seed(42)                                # TODO: Remove
 
-            # TODO: Replace vv
 
-            for endIndex in range(state[1] + 1, len(self.query) + 1): # range() end index is exclusive
-                action = self.query[state[1] : endIndex]
-                newStates.append((action, (state[1], endIndex), self.unigramCost(action)))
+                # TODO: START HERE
+                #       Need to figure out how to negotiate surrounding points
+                #       vs. action of 'Clockwise' or 'Counterclockwise'
+
+
+                # action = 'Clockwise' or 'Counterclockwise'
+                # cost = random.random()
+                # newStates.append((action, (newGrid, nextPoint, lineLength + 1), cost))
 
         return newStates
 

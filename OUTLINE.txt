@@ -103,12 +103,11 @@ WORK SESSION 12/9
 
   Wavy Line Search Problem V1
   ---------------------------
-
   Starting state s_start:   Width x height grid of 'None'
 
   Actions(s):               Clockwise or counter clockwise along adjacent line
 
-  Cost(s, a):               Random number between 0 and 1
+  Cost(s, a):               Random number in the range [0.0, 1.0)
 
   Succ(s, a):               Grid updated with state s current point pointing to state s' current point
 
