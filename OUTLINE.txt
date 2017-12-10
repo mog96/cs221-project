@@ -123,3 +123,15 @@ WORK SESSION 12/9
     - To make the line interesting, there is some probability that we will begin moving counterclockwise
       - This means taking a step in a direction that does not make sense if we were simply moving in our original clockwise direction
       - Just updated state to include the current direction of motion (clockwise/counterclockwise)
+  - Just spoke with CA Rickard Brüel Gabrielsson. He seemed to think the best search algorithm to use for this problem is DFS-ID, such that:
+    - The search is done to some depth
+      - (Something I considered in my notes from 12/4)
+    - A cost is assigned to each action, based on distance from the original starting point
+    - The lowest cost valid path is chosen
+  - An aside: I guess this would've been the value of actually picking a CA as my advisor -- I wouldn't have to update every new CA I talk to on what my problem is
+    - Though it adds to the fun to reintroduce my project to new CAs -- they all think it's weird and interesting
+    - And it doesn't take _that_ long to explain
+  - So I'm going to bail on my formulation: Segregate actions from a given state into either clockwise or conterclockwise, and only return one type or the other
+    - Rickard said that in the case of DFS-ID I can simply use forward, right, or left
+  - I'm still unsure, though, where the probability will come in if I'm using DFS-ID
+    - I suppose it should manifest in the cost of each action

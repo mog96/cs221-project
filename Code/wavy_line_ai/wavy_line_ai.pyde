@@ -67,11 +67,17 @@ class WavyLineProblem(util.SearchProblem):
         newStates = []
         _, _, currentDirection, lineLength = state
         if lineLength + 1 <= self.maxLineLength:
+            if self.shouldChangeDirection():
+                # Only return states that represent change in direction
+            else:
+                # Only return states that represent continuing in same
+                # direction
             for point in self.unvisitedSurroundingPoints(state):
-                if self.changeDirection()
+
 
                 # TODO: START HERE
-                #       Need to figure out how to negotiate surrounding points
+                #       Need to figure out how to apply probability to cost
+                #       how to negotiate surrounding points
                 #       vs. action of 'Clockwise' or 'Counterclockwise'
 
 
@@ -95,8 +101,8 @@ class WavyLineProblem(util.SearchProblem):
                     points.append((x, y))
         return points
 
-    def changeDirection(self):
-        return random.random() > self.changeDirectionProb
+    def shouldChangeDirection(self):
+        return random.random() <= self.changeDirectionProb
 
 
 
