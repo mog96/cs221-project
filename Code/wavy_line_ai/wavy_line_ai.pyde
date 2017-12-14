@@ -233,9 +233,9 @@ def drawGrid():
             fill(0)
             ellipse(p.x, p.y, 2, 2)
 
-# Places one point every 5 pixels. Grid is represented internally as a
-# 2-D array organized as a list of rows. Each grid location in this 2-D array
-# contains the screen coordinates of the grid point.
+# Places one point every 5 pixels. Grid is represented internally as a 2-D
+# array organized as a list of rows. Each grid location in this 2-D array
+# contains the pixel coordinates of the grid point.
 def makeGrid():
     newGrid = []
     yMargin = minBorderWidth + borderMargin(height)
