@@ -18,8 +18,8 @@ class WavyLineProblem(util.SearchProblem):
         random.seed(42)                                # TODO: Remove from prod
 
     # Returns the start state:
-    #   - Starting point as an (x, y) tuple
-    #   - 2-D array of grid locations organized as a list of rows
+    #  - 2-D array of grid locations organized as a list of rows
+    #  - Starting point as an (x, y) tuple
     # Each visited point in the grid stores the coordinates of the next point
     # in the line being drawn. Unvisited points in the grid are therefore set
     # to 'None'.

@@ -34,57 +34,72 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
     def solve(self, problem):
         # If a path exists, set |actions| and |totalCost| accordingly.
         # Otherwise, leave them as None.
-        self.actions = None
-        self.totalCost = None
+        self.actions = []
+        self.totalCost = 0
         self.numStatesExplored = 0
 
         self.problem = problem
-
-        # minimumCostPath = None
-
-        # startState = problem.startState()
-
-        # Begin recursion
+        self.endState = problem.startState()
 
         while True:
-            recurse()
-            
+            self.bestIntermSoln = None
+            recurse([], self.endState, 0, 0)
+            if self.bestIntermSoln is not None:
+                newActions, newEndState, cost, depth = self.bestIntermSoln
+                self.actions += newActions
+                self.totalCost += cost
+                self.numStatesExplored += depth
+                self.endState = newEndState
 
-        self.numStatesExplored, self.depth, self.totalCost, self.actions, \
-            self.endState = recurse()
+        if self.numStatesExplored == 0:
+            self.noPathFound()
+        else:
+            if self.verbose >= 1:
+                print "numStatesExplored = %d" % self.numStatesExplored
+                print "totalCost = %s" % self.totalCost
+                print "actions = %s" % self.actions
+                print "endState = %s" % self.endState
 
-        if self.verbose >= 1:
-            print "numStatesExplored = %d" % self.numStatesExplored
-            print "depth = %s" % depth
-            print "totalCost = %s" % self.totalCost
-            print "actions = %s" % self.actions
-            print "endState = %s" % self.endState
-
-        self.noPathFound()
-
-    def recurse(self, pastActions, state, pastCost, numStatesExplored, depth):
+    def recurse(self, pastActions, state, pastCost, depth):
         if state is None:
             self.noPathFound()
+            return
 
         self.numStatesExplored += 1
         if self.verbose >= 2:
             print "Exploring %s with pastCost %s" % (state, pastCost)
         
-        # Check if we've reached an end state; if so, extract solution.
+        # Check if we've reached an end state or our maximum depth; if so,
+        # compare this solution to current best. Best intermediate solution is
+        # updated if:
+        #  - This solution has greater depth
+        #  - This solution has equal depth but lower cost.
         if self.problem.isEnd(state) or depth == self.maxDepth:
-            return (numStatesExplored, depth, pastCost, pastActions, state)         # TODO: Start here: Append to a list of solutions
+            if self.verbose >= 3:
+                print "Intermediate solution with depth = %s and state = %s" \
+                    % depth, state
+            _, _, bestCost, bestDepth = self.bestSolution
+            if depth > bestDepth or pastCost < cost:
+                if self.verbose >= 3:
+                    print "Updating best intermediate solution"
+                self.bestIntermSoln = (pastActions, state, pastCost, depth)
+            return
 
         # Expand from |state| to new successor states,
         # updating the frontier with each newState.
         for action, newState, cost in problem.succAndCost(state):
             if self.verbose >= 3:
-                print "  Action %s => %s with cost %s + %s" % (action, newState, pastCost, cost)
+                print "  Action %s => %s with cost %s + %s" % \
+                    (action, newState, pastCost, cost)
             actions = list(pastActions) + action
-            return self.recurse(actions, newState, pastCost + cost, depth + 1)
+            self.recurse(actions, newState, pastCost + cost, depth + 1)
 
     def noPathFound(self):
         if self.verbose >= 1:
             print "No path found"
+        self.actions = None
+        self.totalCost = None
+        self.numStatesExplored = 0
 
 
 
