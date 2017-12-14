@@ -34,6 +34,9 @@ PARAMETERS TO TUNE
     - Polygons could be composed ahead of time or composed as line is drawn, with constraints on their size
       - Requirement perhaps is that at least two/three corners must touch corners of nearby polygons
 
+COLOR SCHEME
+  - White on black background
+
 
 +--------------+
 | RELATED WORK |

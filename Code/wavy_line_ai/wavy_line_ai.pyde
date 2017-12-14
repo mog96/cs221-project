@@ -175,7 +175,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
                 print "Intermediate solution with depth = %s and state = %s" \
                     % depth, state
             _, _, bestCost, bestDepth = self.bestIntermSoln
-            if depth > bestDepth or pastCost < cost:
+            if depth > bestDepth or (depth == bestDepth and pastCost < cost):
                 if self.verbose >= 3:
                     print "Updating best intermediate solution"
                 self.bestIntermSoln = (pastActions, state, pastCost, depth)
