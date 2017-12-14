@@ -218,7 +218,17 @@ def setup():
     drawLine()
     # frameRate(30)
     
-    # TODO: Instantiate wavy line problem
+
+
+
+
+    # TODO: START HERE: Instantiate wavy line problem, implement updateDisplay()
+
+
+
+
+
+
 
 # Places one point every 5 pixels. Grid is represented internally as a 2-D
 # array organized as a list of rows. Each grid location in this 2-D array

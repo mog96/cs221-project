@@ -153,3 +153,6 @@ WORK SESSION 12/13
   - So I guess my minimum cost path should be updated with any terminating path, if that path is greater in length than the current best, or if it is the same length, is lower in cost than the current best
 
 WORK SESSION 12/14
+  - Next steps for graphical display:
+    - Implement updateDisplay()
+    - Callable by search problem (whose calling function is called by search algorithm)
