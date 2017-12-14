@@ -115,6 +115,10 @@ class WavyLineProblem(util.SearchProblem):
 ###############################################################################
 # Depth-first search with iterative deepening (DFS-ID).
 
+# DFS-ID is implemented here such that it is depth-first to a fixed depth in
+# order to find a segment of a path, and then repeated to construct a complete
+# path. A path is considered complete when the start point for a new
+# fixed-depth search is surrounded by points already visited by the path.
 class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
     def __init__(self, maxDepth, verbose=0):
         self.verbose = verbose
@@ -131,6 +135,19 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         self.endState = problem.startState()
 
         while True:
+
+
+
+
+
+            # TODO: Confirm that this terminates!!
+            #       Concern is that bestInermSoln will not be None in the case
+            #       when a line is terminated.
+
+
+
+
+
             self.bestIntermSoln = None
             recurse([], self.endState, 0, 0)
             if self.bestIntermSoln is not None:
@@ -217,7 +234,9 @@ def setup():
     drawGrid()
     drawLine()
     # frameRate(30)
-    
+
+    dfsid = DepthFirstSearchIterativeDeepening(10, verbose=3)
+    dfsid.solve(SegmentationProblem(query, unigramCost))
 
 
 
