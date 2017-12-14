@@ -143,3 +143,4 @@ WORK SESSION 12/13
     - Draw this path
     - Advance current point to end of path
     - Repeat
+  - If I want actions to be more descriptive in verbose mode (i.e. 'forward', 'left', 'right'), I need to save the previous point in my state as well

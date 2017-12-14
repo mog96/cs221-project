@@ -4,6 +4,7 @@
 
 ###############################################################################
 
+import copy
 import random
 
 class WavyLineProblem(util.SearchProblem):
@@ -20,7 +21,6 @@ class WavyLineProblem(util.SearchProblem):
     # Returns the start state:
     #   - Starting point as an (x, y) tuple
     #   - 2-D array of grid locations organized as a list of rows
-    #   - Current direction of motion: clockwise or counterclockwise
     # Each visited point in the grid stores the coordinates of the next point
     # in the line being drawn. Unvisited points in the grid are therefore set
     # to 'None'.
@@ -44,18 +44,19 @@ class WavyLineProblem(util.SearchProblem):
     #  - Cost is a random number in the range [0.0, 1.0).
     def succAndCost(self, state):
         newStates = []
-        _, _, currentDirection = state
+        _, currentGrid = state
         if lineLength + 1 <= self.maxLineLength:
-            for point in self.unvisitedSurroundingPoints(state):
+            for newPoint in self.unvisitedSurroundingPoints(state):
+                newGrid = copy.deepcopy(currentGrid)
+                x, y = newPoint
+                newGrid[y][x] = newPoint
 
 
-                # TODO: START HERE
+                # TODO: Make this better than random!
+                cost = random.random()
 
 
-                # action = 'forward', 'left', 'right'
-                # cost = random.random()
-                # newStates.append((action, (newGrid, nextPoint), cost))
-
+                newStates.append(('advance', (newGrid, newPoint), cost))
         return newStates
 
     # Returns a list of the unvisited points in |state|'s grid surrounding
