@@ -36,7 +36,7 @@ class SearchAlgorithm:
 # Wavy line search problem definition.
 
 class WavyLineProblem(util.SearchProblem):
-    def __init__(self, width, height, startPoint):
+    def __init__(self, width, height, startPoint, updateDisplayFn):
         assert(width > 0 and height > 0)
         self.width = width
         self.height = height
@@ -44,6 +44,9 @@ class WavyLineProblem(util.SearchProblem):
         assert(x >= 0 and x < width)
         assert(y >= 0 and y < height)
         self.startPoint = startPoint  # (x, y) tuple
+
+        self.updateDisplayFn = updateDisplayFn
+
         random.seed(42)                                # TODO: Remove from prod
 
     # Returns the start state:
@@ -72,7 +75,7 @@ class WavyLineProblem(util.SearchProblem):
     #  - Cost is a random number in the range [0.0, 1.0).
     def succAndCost(self, state):
         succAndCosts = []
-        _, currentGrid = state
+        currentGrid, _ = state
         if lineLength + 1 <= self.maxLineLength:
             for newPoint in self.unvisitedSurroundingPoints(state):
                 newGrid = copy.deepcopy(currentGrid)
@@ -91,7 +94,7 @@ class WavyLineProblem(util.SearchProblem):
     # |state|'s current point.
     def unvisitedSurroundingPoints(self, state):
         points = []
-        grid, currentPoint, _, _ = state
+        grid, currentPoint = state
         currentX, currentY = currentPoint
         xMin, xMax = max(0, currentX - 1), min(self.width - 1, currentX + 1)
         yMin, yMax = max(0, currentY - 1), min(self.height - 1, currentY + 1)
@@ -101,15 +104,21 @@ class WavyLineProblem(util.SearchProblem):
                     points.append((x, y))
         return points
 
+    # Called by search algorithm to update the graphical display with the
+    # current state.
+    def updateDisplay(self, state):
+        grid, currentPoint = state
+        self.updateDisplayFn(grid, currentPoint)
+
 
 
 ###############################################################################
 # Depth-first search with iterative deepening (DFS-ID).
 
 class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
-    def __init__(self, verbose=0):
+    def __init__(self, maxDepth, verbose=0):
         self.verbose = verbose
-        self.maxDepth = 10
+        self.maxDepth = maxDepth
 
     def solve(self, problem):
         # If a path exists, set |actions| and |totalCost| accordingly.
@@ -130,21 +139,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
                 self.totalCost += cost
                 self.numStatesExplored += depth
                 self.endState = newEndState
-
-
-
-
-
-
-
-
-                # TODO: START HERE: Update display
-
-
-
-
-
-
+                self.problem.updateDisplay(self.endState)
                 
 
         if self.numStatesExplored == 0:
