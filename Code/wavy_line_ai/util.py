@@ -29,6 +29,7 @@ class SearchAlgorithm:
 class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
     def __init__(self, verbose=0):
         self.verbose = verbose
+        self.maxDepth = 10
 
     def solve(self, problem):
         # If a path exists, set |actions| and |totalCost| accordingly.
@@ -37,12 +38,14 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         self.totalCost = None
         self.numStatesExplored = 0
 
-        minimumCostPath = None
+        # minimumCostPath = None
 
         # startState = problem.startState()
 
-        while True:
-            # Use stack to emulate recursive call ?
+        # Begin recursion
+
+    def recurse(state):
+        # If isEnd(state) and depth == depth
 
 
         # TODO: START HERE
