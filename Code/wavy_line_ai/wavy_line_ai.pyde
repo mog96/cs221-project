@@ -43,7 +43,7 @@ class WavyLineProblem(util.SearchProblem):
     #     point is populated with |newState|'s current point
     #  - Cost is a random number in the range [0.0, 1.0).
     def succAndCost(self, state):
-        newStates = []
+        succAndCosts = []
         _, currentGrid = state
         if lineLength + 1 <= self.maxLineLength:
             for newPoint in self.unvisitedSurroundingPoints(state):
@@ -56,8 +56,8 @@ class WavyLineProblem(util.SearchProblem):
                 cost = random.random()
 
 
-                newStates.append(('advance', (newGrid, newPoint), cost))
-        return newStates
+                succAndCosts.append(('advance', (newGrid, newPoint), cost))
+        return succAndCosts
 
     # Returns a list of the unvisited points in |state|'s grid surrounding
     # |state|'s current point.
