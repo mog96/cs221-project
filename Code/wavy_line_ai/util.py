@@ -51,6 +51,13 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
                 self.numStatesExplored += depth
                 self.endState = newEndState
 
+                # TODO: Update display
+
+
+
+
+                
+
         if self.numStatesExplored == 0:
             self.noPathFound()
         else:
