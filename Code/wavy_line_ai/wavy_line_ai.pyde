@@ -20,7 +20,7 @@ class WavyLineProblem(util.SearchProblem):
         self.startPoint = startPoint  # (x, y) tuple
         self.changeDirectionProb = .314
         self.maxLineLength = 60
-        random.seed(42)                        # TODO: Remove from prod
+        random.seed(42)                                # TODO: Remove from prod
 
     # Returns the start state:
     #   - Starting point as an (x, y) tuple
