@@ -4,8 +4,7 @@
 
 ###############################################################################
 
-import copy
-import random
+import copy, random
 
 class WavyLineProblem(util.SearchProblem):
     def __init__(self, width, height, startPoint):
