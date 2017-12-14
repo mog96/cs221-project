@@ -136,7 +136,7 @@ WORK SESSION 12/9
     - I suppose it should manifest in the cost of each action
 
 WORK SESSION 12/13
-  - Implementing DFS-ID:
+  - DFS-ID implementation:
     - DFS to a depth limit
     - Track cost of each successful path (that reaches depth d)
     - Choose path with lowest cost

@@ -7,9 +7,6 @@
 import random
 
 class WavyLineProblem(util.SearchProblem):
-    CLOCKWISE = 0
-    COUNTERCLOCKWISE = 1
-
     def __init__(self, width, height, startPoint):
         assert(width > 0 and height > 0)
         self.width = width
@@ -18,8 +15,6 @@ class WavyLineProblem(util.SearchProblem):
         assert(x >= 0 and x < width)
         assert(y >= 0 and y < height)
         self.startPoint = startPoint  # (x, y) tuple
-        self.changeDirectionProb = .314
-        self.maxLineLength = 60
         random.seed(42)                                # TODO: Remove from prod
 
     # Returns the start state:
@@ -29,61 +24,37 @@ class WavyLineProblem(util.SearchProblem):
     # Each visited point in the grid stores the coordinates of the next point
     # in the line being drawn. Unvisited points in the grid are therefore set
     # to 'None'.
-    # Development version contains line length state parameter as well.
     def startState(self):
-        startingGrid = self.startPoint, [[None] * self.width] * self.height
-        startingDirection = random.choice([CLOCKWISE, COUNTERCLOCKWISE])
-        startingLineLength = 0
-        return (startingGrid, self.startPoint, self.startingDirection, \
-            startingLineLength)
+        startingGrid = [[None] * self.width] * self.height
+        return (startingGrid, self.startPoint)
 
     # Returns whether |state| is an end state or not: True if all points
     # surrounding current point have been visited.
-    # Development version checks whether line length has exceeded max.
     def isEnd(self, state):
-        _, _, lineLength = state
-        return lineLength == self.maxLineLength or \
-            self.surroundingPoints(state) is None
+        return self.surroundingPoints(state) is None
 
     # Returns a list of (action, newState, cost) tuples corresponding to edges
-    # coming out of |state|. Actions are:
-    #   - Move in the current direction of motion (clockwise/counterclockwise)
-    #   - Move in the other direction
-    # as the current grid permits. Any step taken that can be considered as
-    # continuing in the current direction is considered as such. So, for
-    # example, a step taken to get around a visited point, if necessary to
-    # continue in the current direciton, is considered the same as the current
-    # direction. Conversely, a step taken that is not necessary to continue in
-    # the current direction is considered to be the other direction of motion.
-    # New state is comprised of:
-    #   - New current point selected from unvisited points surrounding
+    # coming out of |state|.
+    #  - Action is a movement forward, left, or right.
+    #  - New state is comprised of:
+    #    - New current point selected from unvisited points surrounding
     #     |state|'s current point
-    #   - New grid, updated from the previous grid such that |state|'s current
+    #    - New grid, updated from the previous grid such that |state|'s current
     #     point is populated with |newState|'s current point
-    #   - New direction of motion, if changed; else same as before.
-    # Cost is a random number in the range [0.0, 1.0).
-    # Development version stores incremented line length in |newState| as well.
+    #  - Cost is a random number in the range [0.0, 1.0).
     def succAndCost(self, state):
         newStates = []
-        _, _, currentDirection, lineLength = state
+        _, _, currentDirection = state
         if lineLength + 1 <= self.maxLineLength:
-            if self.shouldChangeDirection():
-                # Only return states that represent change in direction
-            else:
-                # Only return states that represent continuing in same
-                # direction
             for point in self.unvisitedSurroundingPoints(state):
 
 
                 # TODO: START HERE
-                #       Need to figure out how to apply probability to cost
-                #       how to negotiate surrounding points
-                #       vs. action of 'Clockwise' or 'Counterclockwise'
 
 
-                # action = 'Clockwise' or 'Counterclockwise'
+                # action = 'forward', 'left', 'right'
                 # cost = random.random()
-                # newStates.append((action, (newGrid, nextPoint, lineLength + 1), cost))
+                # newStates.append((action, (newGrid, nextPoint), cost))
 
         return newStates
 
@@ -100,9 +71,6 @@ class WavyLineProblem(util.SearchProblem):
                 if grid[y][x] is not None and (x, y) != currentPoint:
                     points.append((x, y))
         return points
-
-    def shouldChangeDirection(self):
-        return random.random() <= self.changeDirectionProb
 
 
 
