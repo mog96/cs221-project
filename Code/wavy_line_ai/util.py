@@ -1,6 +1,6 @@
 import heapq, collections, re, sys, time, os, random
 
-############################################################
+###############################################################################
 # Abstract interfaces for search problems and search algorithms.
 
 class SearchProblem:
@@ -23,7 +23,22 @@ class SearchAlgorithm:
     #                   action sequence exists.
     def solve(self, problem): raise NotImplementedError("Override me")
 
-############################################################
+###############################################################################
+# Depth-first search with iterative deepening (DFS-ID).
+
+class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
+    def __init__(self, verbose=0):
+        self.verbose = verbose
+
+    def solve(self, problem):
+        # TODO: START HERE
+
+
+
+
+
+
+###############################################################################
 # Uniform cost search algorithm (Dijkstra's algorithm).
 
 class UniformCostSearch(SearchAlgorithm):
