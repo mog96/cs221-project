@@ -209,8 +209,7 @@ grid = []
 def setup():
     size(1180, 680)
     background(255)    
-    global grid
-    grid = makeGrid()
+    makeGrid()
     
     print "GRID", grid
     print""
@@ -237,16 +236,16 @@ def drawGrid():
 # array organized as a list of rows. Each grid location in this 2-D array
 # contains the pixel coordinates of the grid point.
 def makeGrid():
-    newGrid = []
+    global grid
     yMargin = minBorderWidth + borderMargin(height)
     xMargin = minBorderWidth + borderMargin(width)
     yIndex = 0
     for y in range(yMargin, height - yMargin, pointSpacing):
-        newGrid.append([])
+        grid.append([])
         for x in range(xMargin, width - xMargin, pointSpacing):
-            newGrid[yIndex].append((x, y))
+            grid[yIndex].append((x, y))
         yIndex += 1
-    return newGrid
+    return grid
 
 # Returns the offset that needs to be
 def borderMargin(widthOrHeight):
