@@ -1,6 +1,10 @@
+############################################################
+# Source: CS 221 Homework 3: Text Reconstruction
+############################################################
+
 import heapq, collections, re, sys, time, os, random
 
-###############################################################################
+############################################################
 # Abstract interfaces for search problems and search algorithms.
 
 class SearchProblem:
@@ -23,97 +27,7 @@ class SearchAlgorithm:
     #                   action sequence exists.
     def solve(self, problem): raise NotImplementedError("Override me")
 
-###############################################################################
-# Depth-first search with iterative deepening (DFS-ID).
-
-class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
-    def __init__(self, verbose=0):
-        self.verbose = verbose
-        self.maxDepth = 10
-
-    def solve(self, problem):
-        # If a path exists, set |actions| and |totalCost| accordingly.
-        # Otherwise, leave them as None.
-        self.actions = []
-        self.totalCost = 0
-        self.numStatesExplored = 0
-
-        self.problem = problem
-        self.endState = problem.startState()
-
-        while True:
-            self.bestIntermSoln = None
-            recurse([], self.endState, 0, 0)
-            if self.bestIntermSoln is not None:
-                newActions, newEndState, cost, depth = self.bestIntermSoln
-                self.actions += newActions
-                self.totalCost += cost
-                self.numStatesExplored += depth
-                self.endState = newEndState
-
-                # TODO: Update display
-
-
-
-
-                
-
-        if self.numStatesExplored == 0:
-            self.noPathFound()
-        else:
-            if self.verbose >= 1:
-                print "numStatesExplored = %d" % self.numStatesExplored
-                print "totalCost = %s" % self.totalCost
-                print "actions = %s" % self.actions
-                print "endState = %s" % self.endState
-
-    def recurse(self, pastActions, state, pastCost, depth):
-        if state is None:
-            self.noPathFound()
-            return
-
-        self.numStatesExplored += 1
-        if self.verbose >= 2:
-            print "Exploring %s with pastCost %s" % (state, pastCost)
-        
-        # Check if we've reached an end state or our maximum depth; if so,
-        # compare this solution to current best. Best intermediate solution is
-        # updated if:
-        #  - This solution has greater depth
-        #  - This solution has equal depth but lower cost.
-        if self.problem.isEnd(state) or depth == self.maxDepth:
-            if self.verbose >= 3:
-                print "Intermediate solution with depth = %s and state = %s" \
-                    % depth, state
-            _, _, bestCost, bestDepth = self.bestIntermSoln
-            if depth > bestDepth or pastCost < cost:
-                if self.verbose >= 3:
-                    print "Updating best intermediate solution"
-                self.bestIntermSoln = (pastActions, state, pastCost, depth)
-            return
-
-        # Expand from |state| to new successor states,
-        # updating the frontier with each newState.
-        for action, newState, cost in problem.succAndCost(state):
-            if self.verbose >= 3:
-                print "  Action %s => %s with cost %s + %s" % \
-                    (action, newState, pastCost, cost)
-            actions = list(pastActions) + action
-            self.recurse(actions, newState, pastCost + cost, depth + 1)
-
-    def noPathFound(self):
-        if self.verbose >= 1:
-            print "No path found"
-        self.actions = None
-        self.totalCost = None
-        self.numStatesExplored = 0
-
-
-
-
-
-
-###############################################################################
+############################################################
 # Uniform cost search algorithm (Dijkstra's algorithm).
 
 class UniformCostSearch(SearchAlgorithm):
@@ -198,3 +112,29 @@ class PriorityQueue:
             self.priorities[state] = self.DONE
             return (state, priority)
         return (None, None) # Nothing left...
+
+############################################################
+# Simple examples of search problems to test your code for Problem 1.
+
+# A simple search problem on the number line:
+# Start at 0, want to go to 10, costs 1 to move left, 2 to move right.
+class NumberLineSearchProblem:
+    def startState(self): return 0
+    def isEnd(self, state): return state == 10
+    def succAndCost(self, state): return [('West', state-1, 1), ('East', state+1, 2)]
+
+# A simple search problem on a square grid:
+# Start at init position, want to go to (0, 0)
+# cost 2 to move up/left, 1 to move down/right
+class GridSearchProblem(SearchProblem):
+    def __init__(self, size, x, y): self.size, self.start = size, (x,y)
+    def startState(self): return self.start
+    def isEnd(self, state): return state == (0, 0)
+    def succAndCost(self, state):
+        x, y = state
+        results = []
+        if x-1 >= 0: results.append(('North', (x-1, y), 2))
+        if x+1 < self.size: results.append(('South', (x+1, y), 1))
+        if y-1 >= 0: results.append(('West', (x, y-1), 2))
+        if y+1 < self.size: results.append(('East', (x, y+1), 1))
+        return results
