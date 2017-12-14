@@ -131,7 +131,16 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
                 self.numStatesExplored += depth
                 self.endState = newEndState
 
-                # TODO: Update display
+
+
+
+
+
+
+
+                # TODO: START HERE: Update display
+
+
 
 
 
@@ -191,7 +200,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 
 
 ###############################################################################
-# Graphical Display
+# Graphical display.
 
 # Border will be at least this wide. May be slightly larger in order to center
 # grid in frame given pointSpacing.
