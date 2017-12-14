@@ -204,6 +204,8 @@ pointSpacing = 10
 
 grid = []
 
+# Sizes grid to the screen, and then instantiates a WavyLineSearchProblem with
+# the determined size.
 def setup():
     size(1180, 680)
     background(255)    
@@ -231,21 +233,24 @@ def drawGrid():
             fill(0)
             ellipse(p.x, p.y, 2, 2)
 
-# Place one point every 5 pixels.
+# Places one point every 5 pixels. Grid is represented internally as a
+# 2-D array organized as a list of rows. Each grid location in this 2-D array
+# contains the screen coordinates of the grid point.
 def makeGrid():
     newGrid = []
-    yBorderOffset = ((height - 2 * minBorderWidth) % pointSpacing) / 2
-    print height
-    xBorderOffset = ((width - 2 * minBorderWidth) % pointSpacing) / 2
+    yMargin = minBorderWidth + borderMargin(height)
+    xMargin = minBorderWidth + borderMargin(width)
     yIndex = 0
-    for y in range(minBorderWidth + yBorderOffset, height - minBorderWidth, \
-                       pointSpacing):
+    for y in range(yMargin, height - yMargin, pointSpacing):
         newGrid.append([])
-        for x in range(minBorderWidth + xBorderOffset, \
-                           width - minBorderWidth, pointSpacing):
-            newGrid[yIndex].append(Point(x, y))
+        for x in range(xMargin, width - xMargin, pointSpacing):
+            newGrid[yIndex].append((x, y))
         yIndex += 1
     return newGrid
+
+# Returns the offset that needs to be
+def borderMargin(widthOrHeight):
+    return ((widthOrHeight - 2 * minBorderWidth) % pointSpacing) / 2
 
 def drawLine():
     firstPoint = grid[0][0]

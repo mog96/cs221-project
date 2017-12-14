@@ -151,3 +151,5 @@ WORK SESSION 12/13
     - Reaches desired depth
     - Reaches furthest (not to desired depth)
   - So I guess my minimum cost path should be updated with any terminating path, if that path is greater in length than the current best, or if it is the same length, is lower in cost than the current best
+
+WORK SESSION 12/14
