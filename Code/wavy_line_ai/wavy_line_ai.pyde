@@ -59,7 +59,7 @@ class WavyLineProblem(util.SearchProblem):
     # Returns whether |state| is an end state or not: True if all points
     # surrounding current point have been visited.
     def isEnd(self, state):
-        return self.surroundingPoints(state) is None
+        return self.unvisitedSurroundingPoints(state) is None
 
     # Returns a list of (action, newState, cost) tuples corresponding to edges
     # coming out of |state|.
