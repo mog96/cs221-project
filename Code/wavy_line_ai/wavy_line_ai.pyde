@@ -36,13 +36,13 @@ class SearchAlgorithm:
 # Wavy line search problem definition.
 
 class WavyLineProblem(util.SearchProblem):
-    def __init__(self, width, height, startPoint, updateDisplayFn):
-        assert(width > 0 and height > 0)
-        self.width = width
-        self.height = height
+    def __init__(self, gridWidth, gridHeight, startPoint, updateDisplayFn):
+        assert(gridWidth > 0 and gridHeight > 0)
+        self.gridWidth = gridWidth
+        self.gridHeight = gridHeight
         x, y = startPoint
-        assert(x >= 0 and x < width)
-        assert(y >= 0 and y < height)
+        assert(x >= 0 and x < gridWidth)
+        assert(y >= 0 and y < gridHeight)
         self.startPoint = startPoint  # (x, y) tuple
 
         self.updateDisplayFn = updateDisplayFn
@@ -56,7 +56,7 @@ class WavyLineProblem(util.SearchProblem):
     # in the line being drawn. Unvisited points in the grid are therefore set
     # to 'None'.
     def startState(self):
-        startingGrid = [[None] * self.width] * self.height
+        startingGrid = [[None] * self.gridWidth] * self.gridHeight
         return (startingGrid, self.startPoint)
 
     # Returns whether |state| is an end state or not: True if all points
@@ -221,7 +221,7 @@ pointSpacing = 10
 
 grid = []
 
-# Sizes grid to the screen, and then instantiates a WavyLineSearchProblem with
+# Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with
 # the determined size.
 def setup():
     size(1180, 680)
@@ -231,12 +231,18 @@ def setup():
     print "GRID", grid
     print""
     
-    drawGrid()
-    drawLine()
+    drawGridPoints()
+    gridHeight = len(grid)
+    if gridHeight == 0:
+        raise Exception("Canvas not tall enough")
+    gridWidth = len(grid[0])
+    if gridWidth == 0:
+        raise Exception("Canvas not wide enough")
+
     # frameRate(30)
 
     dfsid = DepthFirstSearchIterativeDeepening(10, verbose=3)
-    dfsid.solve(SegmentationProblem(query, unigramCost))
+    dfsid.solve(WavyLineProblem(gridHeight, gridWidth, (0, 0), updateDisplay))
 
 
 
@@ -247,40 +253,59 @@ def setup():
 
 
 
-
+    drawLine()
 
 # Places one point every 5 pixels. Grid is represented internally as a 2-D
 # array organized as a list of rows. Each grid location in this 2-D array
 # contains the pixel coordinates of the grid point.
 def makeGrid():
     global grid
-    yMargin = minBorderWidth + borderMargin(height)
-    xMargin = minBorderWidth + borderMargin(width)
-    yIndex = 0
+    yMargin = minBorderWidth + gridBorderMargin(height)
+    xMargin = minBorderWidth + gridBorderMargin(width)
+    colIndex = 0
     for y in range(yMargin, height - yMargin, pointSpacing):
         grid.append([])
         for x in range(xMargin, width - xMargin, pointSpacing):
-            grid[yIndex].append((x, y))
-        yIndex += 1
+            grid[colIndex].append((x, y))
+        colIndex += 1
     return grid
 
-def draw():
-    # TODO: Draw line in red.
-    # TODO: Setup state, etc. for search problem
-    pass
+# Wipes canvas and draws the line stored in the grid parameter. Grid parameter
+# is expected to be a 2-D array of grid locations organized as a list of rows,
+# wherein each visited point in the grid stores the coordinates of the next
+# point in the line being drawn. Unvisited points in the grid are therefore
+# expected to be set to None.
+def updateDisplay(grid, currentPoint):
 
-def drawGrid():
+
+
+    # TODO: Draw in point order instead?
+
+
+
+    
+    for colIndex in range(len(grid)):
+        for rowIndex in range(len(grid[colIndex])):
+            startPoint = (rowIndex, colIndex)
+            endPoint = grid[colIndex][rowIndex]
+            drawLine(startPoint, endPoint)
+
+# Draws grid points.
+def drawGridPoints():
     # print "GRID", grid
     for row in grid:
         for p in row:
             fill(0)
             ellipse(p.x, p.y, 2, 2)
 
-# Returns the offset that needs to be
-def borderMargin(widthOrHeight):
-    return ((widthOrHeight - 2 * minBorderWidth) % pointSpacing) / 2
+# Returns the amount that must be added to the minimum grid border in order
+# to snugly fit the grid to the canvas size.
+def gridBorderMargin(canvasWidthOrHeight):
+    return ((canvasWidthOrHeight - 2 * minBorderWidth) % pointSpacing) / 2
 
-def drawLine():
+# Draws a line between the grid points denoted by startPoint and endPoint,
+# which are (x, y) tuples.
+def drawLine(startPoint, endPoint):
     firstPoint = grid[0][0]
     secondPoint = grid[0][1]
     stroke(255, 0, 0)
