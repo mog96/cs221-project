@@ -94,9 +94,9 @@ class WavyLineProblem(SearchProblem):
 
             widthHeightAverage = (self.gridWidth + self.gridHeight) / 2
             randomFactor = random.random() * widthHeightAverage / 30
-            surroundingPointsFactor = 2
+            surroundingPointsFactor = widthHeightAverage / 30
             if len(self.unvisitedSurroundingPoints(newState)) >= 3:
-                surroundingPointsFactor = 10
+                surroundingPointsFactor *= 2
             cost = self.distanceFromStart(newPoint) * 0.5 \
                 + self.distanceFromNearestCanvasEdge(newPoint) * 0.4 + \
                 + randomFactor + surroundingPointsFactor
