@@ -243,6 +243,7 @@ minBorderWidth = 10
 pointSpacing = 10
 
 grid = []
+startPoint = (0, 0)
 
 # Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with
 # the determined size.
@@ -262,7 +263,7 @@ def setup():
     # frameRate(30)
 
     dfsid = DepthFirstSearchIterativeDeepening(10, verbose=0)
-    dfsid.solve(WavyLineProblem(gridHeight, gridWidth, (0, 0), updateDisplay))
+    dfsid.solve(WavyLineProblem(gridHeight, gridWidth, startPoint, updateDisplay))
 
     # drawLine()
 
@@ -291,7 +292,7 @@ def drawGridPoints():
     # print "GRID", grid
     for row in grid:
         for x, y in row:
-            fill(0, 0, 255)
+            fill(255, 255, 0)
             ellipse(x, y, 2, 2)
 
 # Wipes canvas and draws the line stored in the grid parameter. Grid parameter
@@ -300,21 +301,12 @@ def drawGridPoints():
 # point in the line being drawn. Unvisited points in the grid are therefore
 # expected to be set to None.
 def updateDisplay(grid, currentPoint):
-    for colIndex in range(len(grid)):
-        for rowIndex in range(len(grid[colIndex])):
-            startPoint = (rowIndex, colIndex)
-            endPoint = grid[colIndex][rowIndex]
-            drawLine(startPoint, endPoint)
-
-
-    # TODO: Draw in point order, starting from last added point (to make a
-    #       a compelling drawing animation)
-
-
-
-
-
-
+    currentPoint = startPoint
+    while currentPoint is not None:
+        rowIndex, colIndex = currentPoint
+        nextPoint = grid[colIndex][rowIndex]
+        drawLine(currentPoint, nextPoint)
+        currentPoint = nextPoint
 
 # Draws a line between the grid points denoted by startPoint and endPoint,
 # which are (x, y) tuples.
