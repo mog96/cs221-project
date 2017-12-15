@@ -101,9 +101,11 @@ class WavyLineProblem(SearchProblem):
         points = []
         grid, currentPoint = state
         currentX, currentY = currentPoint
-        xMin, xMax = max(0, currentX - 1), min(self.width - 1, currentX + 1)
-        yMin, yMax = max(0, currentY - 1), min(self.height - 1, currentY + 1)
-        for x in range(xMin, xMax + 1):  # range() end index is exclusive
+        xMin = max(0, currentX - 1)
+        xMax = min(self.gridWidth - 1, currentX + 1)
+        yMin = max(0, currentY - 1)
+        yMax = min(self.gridHeight - 1, currentY + 1)
+        for x in range(xMin, xMax + 1):  # End index is exclusive in range()
             for y in range(yMin, yMax + 1):
                 if grid[y][x] is not None and (x, y) != currentPoint:
                     points.append((x, y))
@@ -142,7 +144,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         # Repeat DFS with a maximum depth until an end state is reached.
         while True:
             self.bestIntermSoln = None
-            recurse([], self.endState, 0, 0)
+            self.recurse([], self.endState, 0, 0)
             newActions, newEndState, cost, depth = self.bestIntermSoln
             if self.bestIntermSoln is None or len(newActions) == 0:
                 break
@@ -264,9 +266,9 @@ def gridBorderMargin(canvasWidthOrHeight):
 def drawGridPoints():
     # print "GRID", grid
     for row in grid:
-        for p in row:
+        for x, y in row:
             fill(0, 0, 255)
-            ellipse(p.x, p.y, 2, 2)
+            ellipse(x, y, 2, 2)
 
 # Wipes canvas and draws the line stored in the grid parameter. Grid parameter
 # is expected to be a 2-D array of grid locations organized as a list of rows,
