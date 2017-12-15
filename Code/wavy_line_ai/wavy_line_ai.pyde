@@ -218,11 +218,14 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
             if self.verbose >= 3:
                 print "Intermediate solution with depth = %s and state = %s" \
                     % (depth, self.problem.stringForState(state))
-            _, _, bestCost, bestDepth = self.bestIntermSoln
-            if depth > bestDepth or (depth == bestDepth and pastCost < cost):
-                if self.verbose >= 3:
-                    print "Updating best intermediate solution"
-                self.bestIntermSoln = (pastActions, state, pastCost, depth)
+            solution = (pastActions, state, pastCost, depth)
+            if self.bestIntermSoln is not None:
+                _, _, bestCost, bestDepth = self.bestIntermSoln
+                if depth > bestDepth or (depth == bestDepth and pastCost \
+                    < cost):
+                    self.updateBestIntermSoln(solution)
+            else:
+                self.updateBestIntermSoln(solution)
             return
 
         # Expand from |state| to new successor states,
@@ -234,6 +237,11 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
                         cost)
             actions = list(pastActions) + [action]
             self.recurse(actions, newState, pastCost + cost, depth + 1)
+
+    def updateBestIntermSoln(self, newBest):
+        if self.verbose >= 3:
+            print "Updating best intermediate solution"
+        self.bestIntermSoln = newBest
 
     def noPathFound(self):
         if self.verbose >= 1:
