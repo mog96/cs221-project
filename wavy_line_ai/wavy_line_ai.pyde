@@ -270,14 +270,16 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 # grid in frame given pointSpacing.
 minBorderWidth = 10
 
-# pointSpacing = 10
-pointSpacing = 20
+pointSpacing = 10
+# pointSpacing = 20
 # pointSpacing = 40
 
 grid = []
+
 # startPoint = (0, 0)
-startPoint = (25, 15)
+# startPoint = (25, 15)
 # startPoint = (30, 18)
+startPoint = (50, 30)
 
 segmentSearchDepth = 4
 verbose = 1
