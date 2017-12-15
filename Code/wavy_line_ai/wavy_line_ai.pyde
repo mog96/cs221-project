@@ -139,27 +139,18 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         self.problem = problem
         self.endState = problem.startState()
 
+        # Repeat DFS with a maximum depth until an end state is reached.
         while True:
-
-
-            # TODO: Confirm that this terminates!!
-            #       Concern is that bestInermSoln will not be None in the case
-            #       when a line is terminated.
-
-
-
-
-
-
             self.bestIntermSoln = None
             recurse([], self.endState, 0, 0)
-            if self.bestIntermSoln is not None:
-                newActions, newEndState, cost, depth = self.bestIntermSoln
-                self.actions += newActions
-                self.totalCost += cost
-                self.numStatesExplored += depth
-                self.endState = newEndState
-                self.problem.updateDisplay(self.endState)
+            newActions, newEndState, cost, depth = self.bestIntermSoln
+            if self.bestIntermSoln is None or len(newActions) == 0:
+                break
+            self.actions += newActions
+            self.totalCost += cost
+            self.numStatesExplored += depth
+            self.endState = newEndState
+            self.problem.updateDisplay(self.endState)
                 
 
         if self.numStatesExplored == 0:
