@@ -151,16 +151,16 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
             self.numStatesExplored += depth
             self.endState = newEndState
             self.problem.updateDisplay(self.endState)
-                
 
         if self.numStatesExplored == 0:
             self.noPathFound()
-        else:
-            if self.verbose >= 1:
-                print "numStatesExplored = %d" % self.numStatesExplored
-                print "totalCost = %s" % self.totalCost
-                print "actions = %s" % self.actions
-                print "endState = %s" % self.endState
+            return
+
+        if self.verbose >= 1:
+            print "numStatesExplored = %d" % self.numStatesExplored
+            print "totalCost = %s" % self.totalCost
+            print "actions = %s" % self.actions
+            print "endState = %s" % self.endState
 
     def recurse(self, pastActions, state, pastCost, depth):
         if state is None:
