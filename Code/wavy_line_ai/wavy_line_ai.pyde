@@ -54,7 +54,7 @@ class WavyLineProblem(SearchProblem):
 
         self.updateDisplayFn = updateDisplayFn
 
-        random.seed(42)                                # TODO: Remove from prod
+        # random.seed(42)                                # TODO: Remove from prod
 
     # Returns the start state:
     #  - 2-D array of grid locations organized as a list of rows
@@ -87,14 +87,20 @@ class WavyLineProblem(SearchProblem):
             newGrid = [list(row) for row in currentGrid]
             x, y = currentPoint
             newGrid[y][x] = newPoint
+            newState = (newGrid, newPoint)
 
 
             # TODO: Make this better than random!
 
             widthHeightAverage = (self.gridWidth + self.gridHeight) / 2
             randomFactor = random.random() * widthHeightAverage / 30
-            cost = self.distanceFromStart(newPoint) * 0.5 + randomFactor
-            # cost = random.random()
+            surroundingPointsFactor = 5
+            nextSurroundingPoints = self.unvisitedSurroundingPoints(newState)
+            if len(nextSurroundingPoints) > 0:
+                surroundingPointsFactor = 1.0 / len(nextSurroundingPoints) * 5
+            cost = self.distanceFromStart(newPoint) * 0.5 \
+                + self.distanceFromNearestCanvasEdge(newPoint) * 0.4 + \
+                + randomFactor + surroundingPointsFactor
 
 
 
@@ -102,7 +108,7 @@ class WavyLineProblem(SearchProblem):
 
 
 
-            succAndCosts.append(('advance', (newGrid, newPoint), cost))
+            succAndCosts.append(('advance', newState, cost))
         return succAndCosts
 
     # Returns a list of the unvisited points in |state|'s grid surrounding
@@ -126,6 +132,14 @@ class WavyLineProblem(SearchProblem):
         x1, y1 = self.startPoint
         x2, y2 = point
         return math.sqrt(abs(x2 - x1) ** 2 + abs(y2 - y1) ** 2)
+
+    def distanceFromNearestCanvasEdge(self, point):
+        x, y = point
+        leftEdgeDist = x
+        rightEdgeDist = (self.gridWidth - 1) - x
+        topEdgeDist = y
+        bottomEdgeDist = (self.gridHeight - 1) - x
+        return min(leftEdgeDist, rightEdgeDist, topEdgeDist, bottomEdgeDist)
 
     # Called by search algorithm to update the graphical display with the
     # current state.
@@ -264,6 +278,7 @@ pointSpacing = 20
 grid = []
 # startPoint = (0, 0)
 startPoint = (25, 15)
+# startPoint = (30, 18)
 
 segmentSearchDepth = 2
 verbose = 1
