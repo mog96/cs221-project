@@ -261,7 +261,7 @@ def setup():
 
     # frameRate(30)
 
-    dfsid = DepthFirstSearchIterativeDeepening(10, verbose=3)
+    dfsid = DepthFirstSearchIterativeDeepening(10, verbose=0)
     dfsid.solve(WavyLineProblem(gridHeight, gridWidth, (0, 0), updateDisplay))
 
     # drawLine()
@@ -319,8 +319,9 @@ def updateDisplay(grid, currentPoint):
 # Draws a line between the grid points denoted by startPoint and endPoint,
 # which are (x, y) tuples.
 def drawLine(startPoint, endPoint):
-    firstPoint = grid[0][0]
-    secondPoint = grid[0][1]
+    startRow, startCol = startPoint
+    endRow, endCol = endPoint
+    startX, startY = grid[startCol][startRow]
+    endX, endY = grid[endCol][endRow]
     stroke(255)
-    curve(firstPoint.x, firstPoint.y, firstPoint.x, firstPoint.y, \
-        secondPoint.x, secondPoint.y, secondPoint.x, secondPoint.y)
+    curve(startX, startY, startX, startY, endX, endY, endX, endY)
