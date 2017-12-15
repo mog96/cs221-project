@@ -225,7 +225,7 @@ grid = []
 # the determined size.
 def setup():
     size(1180, 680)
-    background(255)    
+    background(0)    
     makeGrid()
     
     print "GRID", grid
@@ -244,16 +244,7 @@ def setup():
     dfsid = DepthFirstSearchIterativeDeepening(10, verbose=3)
     dfsid.solve(WavyLineProblem(gridHeight, gridWidth, (0, 0), updateDisplay))
 
-
-
-
-    # TODO: START HERE: Instantiate wavy line problem, implement updateDisplay()
-
-
-
-
-
-    drawLine()
+    # drawLine()
 
 # Places one point every 5 pixels. Grid is represented internally as a 2-D
 # array organized as a list of rows. Each grid location in this 2-D array
@@ -269,6 +260,11 @@ def makeGrid():
             grid[colIndex].append((x, y))
         colIndex += 1
     return grid
+
+# Returns the amount that must be added to the minimum grid border in order
+# to snugly fit the grid to the canvas size.
+def gridBorderMargin(canvasWidthOrHeight):
+    return ((canvasWidthOrHeight - 2 * minBorderWidth) % pointSpacing) / 2
 
 # Wipes canvas and draws the line stored in the grid parameter. Grid parameter
 # is expected to be a 2-D array of grid locations organized as a list of rows,
@@ -299,16 +295,11 @@ def drawGridPoints():
             fill(0)
             ellipse(p.x, p.y, 2, 2)
 
-# Returns the amount that must be added to the minimum grid border in order
-# to snugly fit the grid to the canvas size.
-def gridBorderMargin(canvasWidthOrHeight):
-    return ((canvasWidthOrHeight - 2 * minBorderWidth) % pointSpacing) / 2
-
 # Draws a line between the grid points denoted by startPoint and endPoint,
 # which are (x, y) tuples.
 def drawLine(startPoint, endPoint):
     firstPoint = grid[0][0]
     secondPoint = grid[0][1]
-    stroke(255, 0, 0)
+    stroke(255)
     curve(firstPoint.x, firstPoint.y, firstPoint.x, firstPoint.y, \
           secondPoint.x, secondPoint.y, secondPoint.x, secondPoint.y)
