@@ -54,7 +54,7 @@ class WavyLineProblem(SearchProblem):
 
         self.updateDisplayFn = updateDisplayFn
 
-        # random.seed(42)                                # TODO: Remove from prod
+        random.seed(42)                                # TODO: Remove from prod
 
     # Returns the start state:
     #  - 2-D array of grid locations organized as a list of rows
@@ -94,10 +94,9 @@ class WavyLineProblem(SearchProblem):
 
             widthHeightAverage = (self.gridWidth + self.gridHeight) / 2
             randomFactor = random.random() * widthHeightAverage / 30
-            surroundingPointsFactor = 5
-            nextSurroundingPoints = self.unvisitedSurroundingPoints(newState)
-            if len(nextSurroundingPoints) > 0:
-                surroundingPointsFactor = 1.0 / len(nextSurroundingPoints) * 5
+            surroundingPointsFactor = 2
+            if len(self.unvisitedSurroundingPoints(newState)) >= 3:
+                surroundingPointsFactor = 10
             cost = self.distanceFromStart(newPoint) * 0.5 \
                 + self.distanceFromNearestCanvasEdge(newPoint) * 0.4 + \
                 + randomFactor + surroundingPointsFactor
