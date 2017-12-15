@@ -126,8 +126,7 @@ class WavyLineProblem(SearchProblem):
             for y in range(yMin, yMax + 1):
 
 
-                notNone = grid[y][x] is not None
-                print "grid[%s][%s] is not None: %s", (x, y, notNone)
+                print "grid[%s][%s] = %s" % (x, y, grid[y][x])
 
 
                 if grid[y][x] is not None and (x, y) != currentPoint:
