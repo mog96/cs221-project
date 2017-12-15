@@ -166,6 +166,8 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
             print "endState = ",
             for item in self.endState:
                 print item,
+            print ""
+            print "Done!"
 
     def recurse(self, pastActions, state, pastCost, depth):
         if state is None:
