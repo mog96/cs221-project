@@ -297,4 +297,4 @@ def drawLine(startPoint, endPoint):
     secondPoint = grid[0][1]
     stroke(255)
     curve(firstPoint.x, firstPoint.y, firstPoint.x, firstPoint.y, \
-          secondPoint.x, secondPoint.y, secondPoint.x, secondPoint.y)
+        secondPoint.x, secondPoint.y, secondPoint.x, secondPoint.y)
