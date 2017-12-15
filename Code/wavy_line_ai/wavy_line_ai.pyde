@@ -82,11 +82,13 @@ class WavyLineProblem(SearchProblem):
     #  - Cost is a random number in the range [0.0, 1.0).
     def succAndCost(self, state):
         succAndCosts = []
-        currentGrid, _ = state
+        currentGrid, currentPoint = state
         for newPoint in self.unvisitedSurroundingPoints(state):
             newGrid = copy.deepcopy(currentGrid)
             x, y = newPoint
             newGrid[y][x] = newPoint
+
+            print "NEW GRID:", newGrid
 
 
             # TODO: Make this better than random!
