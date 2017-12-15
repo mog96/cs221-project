@@ -168,3 +168,5 @@ WORK SESSION 12/14
         - However, the lines are staying too close to home
         - Something needs to pull them out toward the edge
   - K that's all I think I have time to work on w.r.t. optimizing the search for maximum beauty
+  - Think I've gotten all the results I can get within my remaining time. Time to analyze the images I've collected and do my report
+  - In the spirit of research, this was sort of kind of fun
