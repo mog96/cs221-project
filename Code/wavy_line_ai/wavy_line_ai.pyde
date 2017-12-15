@@ -6,7 +6,7 @@
 
 
 
-import copy, random
+import copy, math, random
 
 # Abstract interfaces for search problems and search algorithms.
 
@@ -74,7 +74,7 @@ class WavyLineProblem(SearchProblem):
     # Returns a list of (action, newState, cost) tuples corresponding to edges
     # coming out of |state|.
     #  - Action is a movement forward, left, or right.
-    #  - New state is comprised of:
+    #  - New state is comprised of:m
     #    - New current point selected from unvisited points surrounding
     #     |state|'s current point
     #    - New grid, updated from the previous grid such that |state|'s current
@@ -90,7 +90,11 @@ class WavyLineProblem(SearchProblem):
 
 
             # TODO: Make this better than random!
-            cost = random.random()
+
+            widthHeightAverage = (self.gridWidth + self.gridHeight) / 2
+            randomFactor = random.random() * widthHeightAverage / 10
+            cost = self.distanceFromStart(newPoint) # + randomFactor
+            # cost = random.random()
 
 
 
@@ -117,6 +121,11 @@ class WavyLineProblem(SearchProblem):
                     (x == currentX or y == currentY):
                     points.append((x, y))
         return points
+
+    def distanceFromStart(self, point):
+        x1, y1 = self.startPoint
+        x2, y2 = point
+        return math.sqrt(abs(x2 - x1) ** 2 + abs(y2 - y1) ** 2)
 
     # Called by search algorithm to update the graphical display with the
     # current state.
@@ -255,7 +264,7 @@ pointSpacing = 20
 grid = []
 startPoint = (0, 0)
 
-segmentSearchDepth = 5
+segmentSearchDepth = 3
 verbose = 1
 
 # Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with
