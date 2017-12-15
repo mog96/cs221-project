@@ -249,12 +249,14 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 minBorderWidth = 10
 
 # pointSpacing = 10
-pointSpacing = 40
+pointSpacing = 20
+# pointSpacing = 40
 
 grid = []
 startPoint = (0, 0)
 
-verbose = 3
+segmentSearchDepth = 5
+verbose = 1
 
 # Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with
 # the determined size.
@@ -276,8 +278,9 @@ def setup():
         print "Grid width = %s" % gridWidth
         print "Grid height = %s" % gridHeight
 
-    dfsid = DepthFirstSearchIterativeDeepening(3, verbose)
-    dfsid.solve(WavyLineProblem(gridWidth, gridHeight, startPoint, updateDisplay))
+    dfsid = DepthFirstSearchIterativeDeepening(segmentSearchDepth, verbose)
+    dfsid.solve(WavyLineProblem(gridWidth, gridHeight, startPoint, \
+        updateDisplay))
 
     # drawLine()
 

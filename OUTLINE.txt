@@ -156,3 +156,5 @@ WORK SESSION 12/14
   - Next steps for graphical display:
     - Implement updateDisplay()
     - Callable by search problem (whose calling function is called by search algorithm)
+  - Interesting: With completely random costs, deeper search depth returns shorter lines
+    - Makes sense, though -- the algorithm is working harder to get itself stuck
