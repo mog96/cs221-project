@@ -162,3 +162,8 @@ WORK SESSION 12/14
     - Must have some random component
     - Base should be comprised of:
       - Distance from starting point (to keep from optimizing toward open space...though, is that a bad thing?)
+      - Distance from edge of canvas (calling it canvas now, instead of page)
+        - I prefer the lines made with distance from starting point multiplied by 0.75
+        - This lessens the effect of the distance and allows for more waviness to seep through from the random factor
+        - However, the lines are staying too close to home
+        - Something needs to pull them out toward the edge
