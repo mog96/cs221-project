@@ -21,6 +21,13 @@ class SearchProblem:
     # coming out of |state|.
     def succAndCost(self, state): raise NotImplementedError("Override me")
 
+    # Called by search algorithm to update the graphical display with the
+    # current state.
+    def updateDisplay(self, state): raise NotImplementedError("Override me")
+
+    # Helpful in the event that the state is too large to be printed as-is.
+    def stringForState(self, state): raise NotImplementedError("Override me")
+
 class SearchAlgorithm:
     # First, call solve on the desired SearchProblem |problem|.
     # Then it should set two things:
@@ -81,7 +88,7 @@ class WavyLineProblem(SearchProblem):
         currentGrid, _ = state
         for newPoint in self.unvisitedSurroundingPoints(state):
 
-            print "ZAZAg"
+            print "ZAZA"
 
             newGrid = copy.deepcopy(currentGrid)
             x, y = newPoint
@@ -133,6 +140,10 @@ class WavyLineProblem(SearchProblem):
     def updateDisplay(self, state):
         grid, currentPoint = state
         self.updateDisplayFn(grid, currentPoint)
+
+    def stringForState(self, state):
+        _, currentPoint = state
+        return currentPoint
 
 
 
@@ -195,18 +206,8 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 
         self.numStatesExplored += 1
         if self.verbose >= 2:
-            print "Exploring %s with pastCost %s" % (state[1], pastCost)
-
-
-            # TODO: BREAKS DECOMPOSITION ^^ !!!
-
-
-
-
-
-
-
-
+            print "Exploring %s with pastCost %s" \
+                % (self.problem.stringForState(state), pastCost)
         
         # Check if we've reached an end state or our maximum depth; if so,
         # compare this solution to current best. Best intermediate solution is
@@ -216,7 +217,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         if self.problem.isEnd(state) or depth == self.maxDepth:
             if self.verbose >= 3:
                 print "Intermediate solution with depth = %s and state = %s" \
-                    % depth, state
+                    % (depth, self.problem.stringForState(state))
             _, _, bestCost, bestDepth = self.bestIntermSoln
             if depth > bestDepth or (depth == bestDepth and pastCost < cost):
                 if self.verbose >= 3:
@@ -229,8 +230,9 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         for action, newState, cost in self.problem.succAndCost(state):
             if self.verbose >= 3:
                 print "  Action %s => %s with cost %s + %s" % \
-                    (action, newState, pastCost, cost)
-            actions = list(pastActions) + action
+                    (action, self.problem.stringForState(newState), pastCost,
+                        cost)
+            actions = list(pastActions) + [action]
             self.recurse(actions, newState, pastCost + cost, depth + 1)
 
     def noPathFound(self):
