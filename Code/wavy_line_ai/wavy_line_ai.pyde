@@ -151,8 +151,14 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         self.problem = problem
         self.endState = problem.startState()
 
+        iterCount = 0
+
         # Repeat DFS with a maximum depth until an end state is reached.
         while True:
+            iterCount += 1
+            if self.verbose >= 1:
+                print "Iteration %s" % iterCount
+
             self.bestIntermSoln = None
             self.recurse([], self.endState, 0, 0)
             if self.bestIntermSoln is None:
@@ -197,7 +203,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         #  - This solution has greater depth
         #  - This solution has equal depth but lower cost.
         if self.problem.isEnd(state) or depth == self.maxDepth:
-            if self.verbose >= 3:
+            if self.verbose >= 2:
                 print "Intermediate solution with depth = %s and state = %s" \
                     % (depth, self.problem.stringForState(state))
             solution = (pastActions, state, pastCost, depth)
@@ -240,7 +246,8 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 # Border will be at least this wide. May be slightly larger in order to center
 # grid in frame given pointSpacing.
 minBorderWidth = 10
-pointSpacing = 10
+# pointSpacing = 10
+pointSpacing = 40
 
 grid = []
 startPoint = (0, 0)
@@ -248,7 +255,8 @@ startPoint = (0, 0)
 # Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with
 # the determined size.
 def setup():
-    size(1180, 680)
+    # size(1180, 680)
+    size(400, 400)
     background(0)    
     makeGrid()
     
@@ -262,10 +270,13 @@ def setup():
 
     # frameRate(30)
 
-    dfsid = DepthFirstSearchIterativeDeepening(10, verbose=0)
+    dfsid = DepthFirstSearchIterativeDeepening(3, verbose=1)
     dfsid.solve(WavyLineProblem(gridHeight, gridWidth, startPoint, updateDisplay))
 
     # drawLine()
+
+def draw():
+    pass
 
 # Places one point every 5 pixels. Grid is represented internally as a 2-D
 # array organized as a list of rows. Each grid location in this 2-D array
@@ -300,11 +311,17 @@ def drawGridPoints():
 # wherein each visited point in the grid stores the coordinates of the next
 # point in the line being drawn. Unvisited points in the grid are therefore
 # expected to be set to None.
-def updateDisplay(grid, currentPoint):
+def updateDisplay(currentGrid, currentPoint):
     currentPoint = startPoint
+
+    print "START POINT", currentPoint
+
     while True:
         rowIndex, colIndex = currentPoint
-        nextPoint = grid[colIndex][rowIndex]
+        nextPoint = currentGrid[colIndex][rowIndex]
+
+        print "NEXT POINT", nextPoint
+
         if nextPoint is None:
             break
         drawLine(currentPoint, nextPoint)
@@ -313,6 +330,9 @@ def updateDisplay(grid, currentPoint):
 # Draws a line between the grid points denoted by startPoint and endPoint,
 # which are (x, y) tuples.
 def drawLine(startPoint, endPoint):
+
+    print "BONANNERS"
+
     startRow, startCol = startPoint
     endRow, endCol = endPoint
     startX, startY = grid[startCol][startRow]
