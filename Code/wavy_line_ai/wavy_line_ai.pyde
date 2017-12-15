@@ -74,6 +74,9 @@ class WavyLineProblem(SearchProblem):
     #     point is populated with |newState|'s current point
     #  - Cost is a random number in the range [0.0, 1.0).
     def succAndCost(self, state):
+
+        print "YAYA"
+
         succAndCosts = []
         currentGrid, _ = state
         for newPoint in self.unvisitedSurroundingPoints(state):
@@ -163,11 +166,12 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
             print "numStatesExplored = %d" % self.numStatesExplored
             print "totalCost = %s" % self.totalCost
             print "actions = %s" % self.actions
-            print "endState = ",
-            for item in self.endState:
-                print item,
-            print ""
-            print "Done!"
+            if self.verbose >= 4:
+                print "endState = ",
+                for item in self.endState:
+                    print item,
+                print ""
+                print "Done!"
 
     def recurse(self, pastActions, state, pastCost, depth):
         if state is None:
@@ -176,7 +180,18 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 
         self.numStatesExplored += 1
         if self.verbose >= 2:
-            print "Exploring %s with pastCost %s" % (state, pastCost)
+            print "Exploring %s with pastCost %s" % (state[1], pastCost)
+
+
+            # TODO: BREAKS DECOMPOSITION ^^ !!!
+
+
+
+
+
+
+
+
         
         # Check if we've reached an end state or our maximum depth; if so,
         # compare this solution to current best. Best intermediate solution is
