@@ -276,19 +276,20 @@ def makeGrid():
 # point in the line being drawn. Unvisited points in the grid are therefore
 # expected to be set to None.
 def updateDisplay(grid, currentPoint):
-
-
-
-    # TODO: Draw in point order instead?
-
-
-
-    
     for colIndex in range(len(grid)):
         for rowIndex in range(len(grid[colIndex])):
             startPoint = (rowIndex, colIndex)
             endPoint = grid[colIndex][rowIndex]
             drawLine(startPoint, endPoint)
+
+
+    # TODO: Draw in point order, starting from last added point (to make a
+    #       a compelling drawing animation)
+
+
+
+
+
 
 # Draws grid points.
 def drawGridPoints():
