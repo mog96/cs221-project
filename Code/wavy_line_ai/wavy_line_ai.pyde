@@ -87,6 +87,11 @@ class WavyLineProblem(util.SearchProblem):
                 cost = random.random()
 
 
+
+
+
+
+
                 succAndCosts.append(('advance', (newGrid, newPoint), cost))
         return succAndCosts
 
@@ -137,12 +142,10 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         while True:
 
 
-
-
-
             # TODO: Confirm that this terminates!!
             #       Concern is that bestInermSoln will not be None in the case
             #       when a line is terminated.
+
 
 
 
