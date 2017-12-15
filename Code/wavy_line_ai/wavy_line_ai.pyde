@@ -124,6 +124,12 @@ class WavyLineProblem(SearchProblem):
 
         for x in range(xMin, xMax + 1):  # End index is exclusive in range()
             for y in range(yMin, yMax + 1):
+
+
+                notNone = grid[y][x] is not None
+                print "grid[%s][%s] is not None: %s", (x, y, notNone)
+
+
                 if grid[y][x] is not None and (x, y) != currentPoint:
                     points.append((x, y))
         return points
