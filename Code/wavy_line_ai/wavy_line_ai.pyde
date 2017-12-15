@@ -81,15 +81,9 @@ class WavyLineProblem(SearchProblem):
     #     point is populated with |newState|'s current point
     #  - Cost is a random number in the range [0.0, 1.0).
     def succAndCost(self, state):
-
-        print "YAYA"
-
         succAndCosts = []
         currentGrid, _ = state
         for newPoint in self.unvisitedSurroundingPoints(state):
-
-            print "ZAZA"
-
             newGrid = copy.deepcopy(currentGrid)
             x, y = newPoint
             newGrid[y][x] = newPoint
@@ -114,21 +108,9 @@ class WavyLineProblem(SearchProblem):
         grid, currentPoint = state
         currentX, currentY = currentPoint
         xMin = max(0, currentX - 1)
-
-        print "xMin", xMin
-
         xMax = min(self.gridWidth - 1, currentX + 1)
-
-        print "xMax", xMax
-
         yMin = max(0, currentY - 1)
-
-        print "yMin", yMin
-
         yMax = min(self.gridHeight - 1, currentY + 1)
-
-        print "yMax", yMax
-
         for x in range(xMin, xMax + 1):  # End index is exclusive in range()
             for y in range(yMin, yMax + 1):
                 if grid[y][x] is None and (x, y) != currentPoint:
@@ -222,7 +204,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
             if self.bestIntermSoln is not None:
                 _, _, bestCost, bestDepth = self.bestIntermSoln
                 if depth > bestDepth or (depth == bestDepth and pastCost \
-                    < cost):
+                    < bestCost):
                     self.updateBestIntermSoln(solution)
             else:
                 self.updateBestIntermSoln(solution)
