@@ -167,3 +167,4 @@ WORK SESSION 12/14
         - This lessens the effect of the distance and allows for more waviness to seep through from the random factor
         - However, the lines are staying too close to home
         - Something needs to pull them out toward the edge
+  - K that's all I think I have time to work on w.r.t. optimizing the search for maximum beauty
