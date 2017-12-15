@@ -92,8 +92,8 @@ class WavyLineProblem(SearchProblem):
             # TODO: Make this better than random!
 
             widthHeightAverage = (self.gridWidth + self.gridHeight) / 2
-            randomFactor = random.random() * widthHeightAverage / 10
-            cost = self.distanceFromStart(newPoint) # + randomFactor
+            randomFactor = random.random() * widthHeightAverage / 30
+            cost = self.distanceFromStart(newPoint) * 0.75 + randomFactor
             # cost = random.random()
 
 
@@ -262,9 +262,10 @@ pointSpacing = 20
 # pointSpacing = 40
 
 grid = []
-startPoint = (0, 0)
+# startPoint = (0, 0)
+startPoint = (25, 15)
 
-segmentSearchDepth = 3
+segmentSearchDepth = 2
 verbose = 1
 
 # Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with

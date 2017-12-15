@@ -158,3 +158,7 @@ WORK SESSION 12/14
     - Callable by search problem (whose calling function is called by search algorithm)
   - Interesting: With completely random costs, deeper search depth returns shorter lines
     - Makes sense, though -- the algorithm is working harder to get itself stuck
+  - Search cost:
+    - Must have some random component
+    - Base should be comprised of:
+      - Distance from starting point (to keep from optimizing toward open space...though, is that a bad thing?)
