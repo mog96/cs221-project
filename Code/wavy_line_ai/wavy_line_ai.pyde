@@ -115,7 +115,8 @@ class WavyLineProblem(SearchProblem):
         yMax = min(self.gridHeight - 1, currentY + 1)
         for x in range(xMin, xMax + 1):  # End index is exclusive in range()
             for y in range(yMin, yMax + 1):
-                if grid[y][x] is None and (x, y) != currentPoint:
+                if grid[y][x] is None and (x, y) != currentPoint and \
+                    (x == currentX or y == currentY):
                     points.append((x, y))
         return points
 
