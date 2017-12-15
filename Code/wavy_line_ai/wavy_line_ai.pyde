@@ -248,18 +248,18 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 # grid in frame given pointSpacing.
 minBorderWidth = 10
 
-pointSpacing = 10
-# pointSpacing = 40
+# pointSpacing = 10
+pointSpacing = 40
 
 grid = []
 startPoint = (0, 0)
 
-verbose = 1
+verbose = 3
 
 # Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with
 # the determined size.
 def setup():
-    size(1180, 680)
+    size(1200, 700)
     # size(800, 600)
     background(0)    
     makeGrid()
@@ -291,6 +291,10 @@ def makeGrid():
     global grid
     yMargin = minBorderWidth + gridBorderMargin(height)
     xMargin = minBorderWidth + gridBorderMargin(width)
+
+    print "Y MARGIN", yMargin
+    print "X MARGIN", xMargin
+
     colIndex = 0
     for y in range(yMargin, height - yMargin, pointSpacing):
         grid.append([])
@@ -317,9 +321,6 @@ def drawGridPoints():
 # point in the line being drawn. Unvisited points in the grid are therefore
 # expected to be set to None.
 def updateDisplay(currentGrid, currentEndPoint):
-
-    print currentGrid
-
     currentPoint = startPoint
     while True:
         rowIndex, colIndex = currentPoint
