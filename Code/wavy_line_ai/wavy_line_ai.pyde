@@ -80,6 +80,9 @@ class WavyLineProblem(SearchProblem):
         succAndCosts = []
         currentGrid, _ = state
         for newPoint in self.unvisitedSurroundingPoints(state):
+
+            print "ZAZAg"
+
             newGrid = copy.deepcopy(currentGrid)
             x, y = newPoint
             newGrid[y][x] = newPoint
@@ -104,9 +107,21 @@ class WavyLineProblem(SearchProblem):
         grid, currentPoint = state
         currentX, currentY = currentPoint
         xMin = max(0, currentX - 1)
+
+        print "xMin", xMin
+
         xMax = min(self.gridWidth - 1, currentX + 1)
+
+        print "xMax", xMax
+
         yMin = max(0, currentY - 1)
+
+        print "yMin", yMin
+
         yMax = min(self.gridHeight - 1, currentY + 1)
+
+        print "yMax", yMax
+
         for x in range(xMin, xMax + 1):  # End index is exclusive in range()
             for y in range(yMin, yMax + 1):
                 if grid[y][x] is not None and (x, y) != currentPoint:
