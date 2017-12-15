@@ -313,10 +313,10 @@ def drawGridPoints():
 # wherein each visited point in the grid stores the coordinates of the next
 # point in the line being drawn. Unvisited points in the grid are therefore
 # expected to be set to None.
-def updateDisplay(currentGrid, currentPoint):
+def updateDisplay(currentGrid, currentEndPoint):
     currentPoint = startPoint
 
-    print "START POINT", currentPoint
+    print "START POINT", startPoint
 
     while True:
         rowIndex, colIndex = currentPoint
