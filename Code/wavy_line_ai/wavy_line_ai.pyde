@@ -266,6 +266,14 @@ def makeGrid():
 def gridBorderMargin(canvasWidthOrHeight):
     return ((canvasWidthOrHeight - 2 * minBorderWidth) % pointSpacing) / 2
 
+# Draws grid points on canvas.
+def drawGridPoints():
+    # print "GRID", grid
+    for row in grid:
+        for p in row:
+            fill(0, 0, 255)
+            ellipse(p.x, p.y, 2, 2)
+
 # Wipes canvas and draws the line stored in the grid parameter. Grid parameter
 # is expected to be a 2-D array of grid locations organized as a list of rows,
 # wherein each visited point in the grid stores the coordinates of the next
@@ -287,13 +295,6 @@ def updateDisplay(grid, currentPoint):
 
 
 
-# Draws grid points.
-def drawGridPoints():
-    # print "GRID", grid
-    for row in grid:
-        for p in row:
-            fill(0)
-            ellipse(p.x, p.y, 2, 2)
 
 # Draws a line between the grid points denoted by startPoint and endPoint,
 # which are (x, y) tuples.
