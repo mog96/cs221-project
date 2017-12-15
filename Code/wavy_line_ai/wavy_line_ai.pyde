@@ -76,23 +76,22 @@ class WavyLineProblem(SearchProblem):
     def succAndCost(self, state):
         succAndCosts = []
         currentGrid, _ = state
-        if lineLength + 1 <= self.maxLineLength:
-            for newPoint in self.unvisitedSurroundingPoints(state):
-                newGrid = copy.deepcopy(currentGrid)
-                x, y = newPoint
-                newGrid[y][x] = newPoint
+        for newPoint in self.unvisitedSurroundingPoints(state):
+            newGrid = copy.deepcopy(currentGrid)
+            x, y = newPoint
+            newGrid[y][x] = newPoint
 
 
-                # TODO: Make this better than random!
-                cost = random.random()
-
-
+            # TODO: Make this better than random!
+            cost = random.random()
 
 
 
 
 
-                succAndCosts.append(('advance', (newGrid, newPoint), cost))
+
+
+            succAndCosts.append(('advance', (newGrid, newPoint), cost))
         return succAndCosts
 
     # Returns a list of the unvisited points in |state|'s grid surrounding
@@ -145,8 +144,10 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
         while True:
             self.bestIntermSoln = None
             self.recurse([], self.endState, 0, 0)
+            if self.bestIntermSoln is None:
+                break
             newActions, newEndState, cost, depth = self.bestIntermSoln
-            if self.bestIntermSoln is None or len(newActions) == 0:
+            if len(newActions) == 0:
                 break
             self.actions += newActions
             self.totalCost += cost
@@ -162,7 +163,9 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
             print "numStatesExplored = %d" % self.numStatesExplored
             print "totalCost = %s" % self.totalCost
             print "actions = %s" % self.actions
-            print "endState = %s" % self.endState
+            print "endState = ",
+            for item in self.endState:
+                print item,
 
     def recurse(self, pastActions, state, pastCost, depth):
         if state is None:
@@ -191,7 +194,7 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 
         # Expand from |state| to new successor states,
         # updating the frontier with each newState.
-        for action, newState, cost in problem.succAndCost(state):
+        for action, newState, cost in self.problem.succAndCost(state):
             if self.verbose >= 3:
                 print "  Action %s => %s with cost %s + %s" % \
                     (action, newState, pastCost, cost)
@@ -223,9 +226,6 @@ def setup():
     size(1180, 680)
     background(0)    
     makeGrid()
-    
-    print "GRID", grid
-    print""
     
     drawGridPoints()
     gridHeight = len(grid)
