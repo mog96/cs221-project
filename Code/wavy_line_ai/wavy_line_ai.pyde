@@ -84,8 +84,8 @@ class WavyLineProblem(SearchProblem):
         succAndCosts = []
         currentGrid, currentPoint = state
         for newPoint in self.unvisitedSurroundingPoints(state):
-            newGrid = copy.deepcopy(currentGrid)
-            x, y = newPoint
+            newGrid = [list(row) for row in currentGrid]
+            x, y = currentPoint
             newGrid[y][x] = newPoint
 
             print "NEW GRID:", newGrid
