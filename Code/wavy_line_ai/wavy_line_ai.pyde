@@ -88,8 +88,6 @@ class WavyLineProblem(SearchProblem):
             x, y = currentPoint
             newGrid[y][x] = newPoint
 
-            print "NEW GRID:", newGrid
-
 
             # TODO: Make this better than random!
             cost = random.random()
@@ -249,17 +247,20 @@ class DepthFirstSearchIterativeDeepening(SearchAlgorithm):
 # Border will be at least this wide. May be slightly larger in order to center
 # grid in frame given pointSpacing.
 minBorderWidth = 10
+
 # pointSpacing = 10
 pointSpacing = 40
 
 grid = []
 startPoint = (0, 0)
 
+verbose = 1
+
 # Sizes grid to the canvas, and then instantiates a WavyLineSearchProblem with
 # the determined size.
 def setup():
     # size(1180, 680)
-    size(400, 400)
+    size(800, 600)
     background(0)    
     makeGrid()
     
@@ -271,10 +272,12 @@ def setup():
     if gridWidth == 0:
         raise Exception("Canvas not wide enough")
 
-    # frameRate(30)
+    if verbose >= 1:
+        print "Grid width = %s" % gridWidth
+        print "Grid height = %s" % gridHeight
 
-    dfsid = DepthFirstSearchIterativeDeepening(3, verbose=1)
-    dfsid.solve(WavyLineProblem(gridHeight, gridWidth, startPoint, updateDisplay))
+    dfsid = DepthFirstSearchIterativeDeepening(3, verbose)
+    dfsid.solve(WavyLineProblem(gridWidth, gridHeight, startPoint, updateDisplay))
 
     # drawLine()
 
@@ -294,7 +297,6 @@ def makeGrid():
         for x in range(xMargin, width - xMargin, pointSpacing):
             grid[colIndex].append((x, y))
         colIndex += 1
-    return grid
 
 # Returns the amount that must be added to the minimum grid border in order
 # to snugly fit the grid to the canvas size.
@@ -315,16 +317,13 @@ def drawGridPoints():
 # point in the line being drawn. Unvisited points in the grid are therefore
 # expected to be set to None.
 def updateDisplay(currentGrid, currentEndPoint):
+
+    print currentGrid
+
     currentPoint = startPoint
-
-    print "START POINT", startPoint
-
     while True:
         rowIndex, colIndex = currentPoint
         nextPoint = currentGrid[colIndex][rowIndex]
-
-        print "NEXT POINT", nextPoint
-
         if nextPoint is None:
             break
         drawLine(currentPoint, nextPoint)
@@ -333,9 +332,6 @@ def updateDisplay(currentGrid, currentEndPoint):
 # Draws a line between the grid points denoted by startPoint and endPoint,
 # which are (x, y) tuples.
 def drawLine(startPoint, endPoint):
-
-    print "BONANNERS"
-
     startRow, startCol = startPoint
     endRow, endCol = endPoint
     startX, startY = grid[startCol][startRow]
