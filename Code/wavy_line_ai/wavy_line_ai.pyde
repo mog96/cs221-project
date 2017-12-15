@@ -302,9 +302,11 @@ def drawGridPoints():
 # expected to be set to None.
 def updateDisplay(grid, currentPoint):
     currentPoint = startPoint
-    while currentPoint is not None:
+    while True:
         rowIndex, colIndex = currentPoint
         nextPoint = grid[colIndex][rowIndex]
+        if nextPoint is None:
+            break
         drawLine(currentPoint, nextPoint)
         currentPoint = nextPoint
 
