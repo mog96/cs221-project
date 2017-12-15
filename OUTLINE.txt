@@ -170,3 +170,6 @@ WORK SESSION 12/14
   - K that's all I think I have time to work on w.r.t. optimizing the search for maximum beauty
   - Think I've gotten all the results I can get within my remaining time. Time to analyze the images I've collected and do my report
   - In the spirit of research, this was sort of kind of fun
+
+  - The key thing I'm missing here is a way to get the tight randomness to continue outward. In the way I've been going about weighting the cost, in order to make the line fill more of the canvas, I have to sacrifice randomness for area covered -- i.e. more straight lines
+    - Guess that's sort of the case in my drawings too, when I'm trying to fill a two-page spread
