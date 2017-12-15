@@ -35,7 +35,7 @@ class SearchAlgorithm:
 ###############################################################################
 # Wavy line search problem definition.
 
-class WavyLineProblem(util.SearchProblem):
+class WavyLineProblem(SearchProblem):
     def __init__(self, gridWidth, gridHeight, startPoint, updateDisplayFn):
         assert(gridWidth > 0 and gridHeight > 0)
         self.gridWidth = gridWidth
