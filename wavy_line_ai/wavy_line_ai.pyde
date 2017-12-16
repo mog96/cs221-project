@@ -54,7 +54,7 @@ class WavyLineProblem(SearchProblem):
 
         self.updateDisplayFn = updateDisplayFn
 
-        # random.seed(42)                                # TODO: Remove from prod
+        # random.seed(42)
 
     # Returns the start state:
     #  - 2-D array of grid locations organized as a list of rows
@@ -79,7 +79,8 @@ class WavyLineProblem(SearchProblem):
     #     |state|'s current point
     #    - New grid, updated from the previous grid such that |state|'s current
     #     point is populated with |newState|'s current point
-    #  - Cost is a random number in the range [0.0, 1.0).
+    #  - Cost is based on several deterministic factors, as well as some
+    #    randomness.
     def succAndCost(self, state):
         succAndCosts = []
         currentGrid, currentPoint = state
@@ -89,9 +90,6 @@ class WavyLineProblem(SearchProblem):
             newGrid[y][x] = newPoint
             newState = (newGrid, newPoint)
 
-
-            # TODO: Make this better than random!
-
             widthHeightAverage = (self.gridWidth + self.gridHeight) / 2
             randomFactor = random.random() * widthHeightAverage / 30
             surroundingPointsFactor = widthHeightAverage / 30
@@ -100,12 +98,6 @@ class WavyLineProblem(SearchProblem):
             cost = self.distanceFromStart(newPoint) * 0.5 \
                 + self.distanceFromNearestCanvasEdge(newPoint) * 0.4 + \
                 + randomFactor + surroundingPointsFactor
-
-
-
-
-
-
 
             succAndCosts.append(('advance', newState, cost))
         return succAndCosts
