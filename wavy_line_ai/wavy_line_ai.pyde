@@ -90,6 +90,7 @@ class WavyLineProblem(SearchProblem):
             newGrid[y][x] = newPoint
             newState = (newGrid, newPoint)
 
+            # Cost computation
             widthHeightAverage = (self.gridWidth + self.gridHeight) / 2
             randomFactor = random.random() * widthHeightAverage / 30
             surroundingPointsFactor = widthHeightAverage / 30
